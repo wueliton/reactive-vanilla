@@ -1,0 +1,130 @@
+:root {
+    color-scheme: light;
+
+    --background: #f2f2f2;
+    --field-background: #ffffff;
+    --foreground: #111111;
+    --muted-foreground: #666666;
+    --surface: #ffffff;
+    --border: #dddddd;
+    --focus: #111111;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        color-scheme: dark;
+
+        --background: #1c1c1c;
+        --field-background: #303030;
+        --foreground: #f5f5f5;
+        --muted-foreground: #a3a3a3;
+        --surface: #282828;
+        --border: #333;
+        --focus: #ffffff;
+    }
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Roboto, sans-serif;
+    min-height: 100dvh;
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    background-color: var(--background);
+    color: var(--foreground);
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    justify-content: center;
+    align-items: center;
+
+    padding: 32px;
+
+    border-radius: 8px;
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+
+    width: min-content;
+    text-align: center;
+}
+
+.container .header {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.container h2 {
+    color: var(--foreground);
+    font-weight: 500;
+}
+
+.container p {
+    font-weight: 300;
+    color: var(--muted-foreground);
+}
+
+.otp-input {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.otp-input input.field {
+    position: absolute;
+    inset: 0;
+
+    opacity: 0;
+    width: calc(100% + 42px);
+}
+
+.otp-input div.otp-fields {
+    display: flex;
+    gap: 6px;
+}
+
+.otp-input div.otp-fields .field {
+    height: 42px;
+    width: 42px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: var(--field-background);
+    color: var(--foreground);
+
+    border: 1px solid var(--border);
+    border-radius: 8px;
+
+    transition:
+        box-shadow 300ms,
+        border-color 300ms,
+        background-color 300ms;
+}
+
+.otp-input div.otp-fields .field.focused {
+    border-color: var(--focus);
+    box-shadow: 0 0 0 2px var(--focus);
+}
+
+.otp-input div.otp-fields .separator {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    color: var(--muted-foreground);
+}
