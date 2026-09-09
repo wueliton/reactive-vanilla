@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="../styles.css" />
 </head>
 
 <body>
@@ -21,10 +21,17 @@
     </nav>
     <div class="router-outlet">
         <div class="otp-container">
-
+            <div class="header">
+                <h2>Enter the code</h2>
+                <p>We sent you a code to your email, please enter to verify your address.</p>
+            </div>
+            <div class="otp-input">
+                <input name="otp" autocomplete="one-time-code" type="text" aria-describedby="otp-help" />
+                <span id="otp-help"></span>
+            </div>
         </div>
     </div>
-    <script type="module" src="./index.js"></script>
+    <script type="module" src="../index.js"></script>
 </body>
 
 </html>

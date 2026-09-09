@@ -30,6 +30,13 @@
     padding: 0;
 }
 
+nav {
+    position: fixed;
+    top: 24px;
+    left: 0;
+    right: 0;
+}
+
 body {
     font-family: Roboto, sans-serif;
     min-height: 100dvh;
@@ -45,6 +52,14 @@ body {
 }
 
 .container {
+    width: 100%;
+    max-width: 1200px;
+    margin: auto;
+}
+
+nav a {}
+
+.otp-container {
     display: flex;
     flex-direction: column;
     gap: 16px;
@@ -127,4 +142,32 @@ body {
     align-items: center;
 
     color: var(--muted-foreground);
+}
+
+::view-transition-old(root) {
+    animation: page-out 300ms ease both;
+}
+
+::view-transition-new(root) {
+    animation: page-in 300ms ease both;
+}
+
+@keyframes page-out {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}
+
+@keyframes page-in {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }

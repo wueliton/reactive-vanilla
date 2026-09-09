@@ -1,6 +1,17 @@
-import { createOtp } from "./components/otp/otp.js";
-import { component } from "./core/component/index.js";
+import { router } from "./core/router/index.js";
 
-const $otp = component('.otp-input', createOtp({
-    filter: (value) => value.replace(/\D/g, ''),
-}));
+const routes = router({
+    outlet: '.router-outlet',
+    routes: {
+        '/': {
+            html: './index.html',
+            script: () => import('./home.js')
+        },
+        '/otp': {
+            html: './otp/index.html',
+            script: () => import('./otp/otp.js')
+        }
+    }
+});
+
+routes.start();

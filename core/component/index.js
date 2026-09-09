@@ -1,5 +1,5 @@
 function component(selector, setup) {
-    const root = document.querySelector(selector);
+    const root = typeof selector === 'string' ? document.querySelector(selector) : selector;
     const context = {
         root,
         activeEffect: null,
