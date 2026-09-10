@@ -1,5 +1,6 @@
 import { effect } from "../effect/index.js";
 import { appendChildren } from "./append-children.js";
+import { bindAttribute } from "./bind-attribute.js";
 import { bindClass } from "./bind-class.js";
 import { bindStyle } from "./bind-style.js";
 
@@ -46,6 +47,11 @@ function el(selector, bindings) {
 
             if (property === 'class') {
                 bindClass(el, value);
+                return true;
+            }
+
+            if (property === 'attr') {
+                bindAttribute(el, value);
                 return true;
             }
 

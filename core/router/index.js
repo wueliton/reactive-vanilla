@@ -123,7 +123,7 @@ function router({ outlet, routes }) {
             document.addEventListener('click', routing.handleClick);
             window.addEventListener('popstate', routing.handlePopState);
 
-            const path = location.pathname.replace(/\/$/, '');
+            const path = location.pathname.replace(/[^/]+\/$/, '');
             const route = routes[path];
 
             const emptyRoute = !route;

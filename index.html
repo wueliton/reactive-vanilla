@@ -7,22 +7,98 @@
     <title>Reactive JS Vanilla OTP Input</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Geist:ital,wght@0,100..900;1,100..900&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="./styles.css" />
 </head>
 
-<body>
+<body class="bg-gray-900 text-white text-opacity-70">
+    </div>
     <nav>
-        <div class="container">
+        <div class="container p-4 flex gap-sm text-sm justify-end">
             <a href="/">Home</a>
-            <a href="/otp">OTP Input</a>
+            <a href="#">Docs</a>
+            <a href="#">Examples</a>
+            <a href="#">Playground</a>
         </div>
     </nav>
     <div class="router-outlet">
-        <div class="otp-container">
+        <section class="p-5 container py-8">
+            <div class="flex flex-col gap-lg pt-[2rem] md:pt-[8rem]">
+                <div class="flex flex-col gap-sm text-center">
+                    <div class="flex flex-col gap-xs">
+                        <h1 class="text-4xl md:text-5xl text-white">
+                            The DOM is already
+                            a rendering engine.
+                        </h1>
+                        <p class="text-black-50">
+                            A tiny reactive runtime for building modern interfaces
+                            with vanilla JavaScript — directly on the DOM.
+                        </p>
+                    </div>
+                    <div class="flex gap-sm justify-center">
+                        <a href="#" class="py-xs px-sm rounded-lg bg-blue-700 text-white">
+                            Get started
+                        </a>
+                        <a href="#" class="py-xs px-sm rounded-lg bg-background-100 border-gray-600 border text-white">
+                            Explore examples
+                        </a>
+                    </div>
+                </div>
 
-        </div>
+                <div data-tabs class="rounded-md flex flex-col md:flex-row max-w-[1000px] gap-md w-full mx-auto">
+                    <div class="flex-1 border border-gray-800 rounded-xl text-sm">
+                        <div class="p-xs flex gap-xxs">
+                            <span class="h-[10px] w-[10px] rounded-full bg-gray-800 inline-block"></span>
+                            <span class="h-[10px] w-[10px] rounded-full bg-gray-800 inline-block"></span>
+                            <span class="h-[10px] w-[10px] rounded-full bg-gray-800 inline-block"></span>
+                        </div>
+                        <div class="border-b border-gray-800">
+                            <button data-tab data-active="true"
+                                class="inline-block p-xs px-xs data-active:border-b border-blue-400 data-active:text-blue-400">counter.js</button>
+                            <button href="#" data-tab
+                                class="inline-block p-xs px-xs data-active:border-b border-blue-400 data-active:text-blue-400">counter.html</button>
+                        </div>
+                        <pre class="p-sm" data-tab-content><code><span class="text-pink-400">component</span>('<span class="text-blue-300">.counter</span>', () => {
+    const <span class="text-blue-400">state</span> = <span class="text-pink-400">signal</span>({
+        count: 1
+    });
+
+    <span class="text-pink-400">el</span>('<span class="text-blue-300">.counter-display</span>', {
+        <span class="text-pink-400">textContent</span>: () => <span class="text-blue-400">state</span>.count
+    });
+
+    <span class="text-pink-400">el</span>('<span class="text-blue-300">.increment</span>', {
+        <span class="text-pink-400">onclick</span>: () => <span class="text-blue-400">state</span>.count++
+    });
+
+    <span class="text-pink-400">el</span>('<span class="text-blue-300">.decrement</span>', {
+        <span class="text-pink-400">onclick</span>: () => <span class="text-blue-400">state</span>.count--
+    });
+});</code></pre>
+                        <pre class="p-sm" data-tab-content hidden><code>&lt;<span class="text-pink-400">div</span> class="<span class="text-blue-300">counter</span>"&gt;
+  &lt;<span class="text-pink-400">button</span> class="<span class="text-blue-300">decrement</span>"&gt;-&lt;/<span class="text-pink-400">button</span>&gt;
+  &lt;<span class="text-pink-400">div</span> class="<span class="text-blue-300">counter-display</span>"&gt;1&lt;/<span class="text-pink-400">div</span>&gt;
+  &lt;<span class="text-pink-400">button</span> class="<span class="text-blue-300">increment</span>"&gt;+&lt;/<span class="text-pink-400">button</span>&gt;
+&lt;/<span class="text-pink-400">div</span>&gt;</code></pre>
+                    </div>
+                    <div class="md:w-[300px]">
+                        <div
+                            class="md:absolute items-center justify-center md:-ml-xl md:mt-xl p-md rounded-xl bg-white text-black flex gap-sm">
+                            <div
+                                class="counter flex gap-xs border border-gray-200 rounded-full items-center p-xxs px-xs">
+                                <button
+                                    class="decrement h-[32px] w-[32px] hover:bg-gray-100 rounded-xl active:scale-[0.9] transition-all">-</button>
+                                <div class="counter-display min-w-[20px] text-center">1</div>
+                                <button
+                                    class="increment h-[32px] w-[32px] hover:bg-gray-100 rounded-xl active:scale-[0.9] transition-all">+</button>
+                            </div>
+                            <button class="py-xs px-sm rounded-lg bg-black text-white">Add to cart</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
     <script type="module" src="./index.js"></script>
 </body>
