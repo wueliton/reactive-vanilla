@@ -11,7 +11,9 @@ function router({ outlet, routes }) {
                 throw new Error(`Route not found: ${route}`);
             }
 
-            const response = await fetch(route.html);
+            const url = new URL(route.html, location.origin);
+
+            const response = await fetch(url);
             const failedResponse = !response.ok;
 
             if (failedResponse) {
@@ -123,7 +125,8 @@ function router({ outlet, routes }) {
             document.addEventListener('click', routing.handleClick);
             window.addEventListener('popstate', routing.handlePopState);
 
-            const path = location.pathname.replace(/[^/]+\/$/, '');
+            const path = routing.normalizePathname(location.pathname);
+            console.log({ path });
             const route = routes[path];
 
             const emptyRoute = !route;
@@ -138,6 +141,13 @@ function router({ outlet, routes }) {
 
             routing.current?.destroy?.();
             routing.current = null;
+        },
+        normalizePathname(pathname) {
+            pathname = pathname.replace('index.html', '');
+
+            if (pathname.endsWith('/') && pathname.length > 1) return pathname.slice(0, -1);
+
+            return pathname;
         }
     }
 

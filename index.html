@@ -1,106 +1,1748 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype
+  html
+>
+<html
+  lang="en"
+>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta
+      charset="UTF-8"
+    />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
     <title>Reactive JS Vanilla OTP Input</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Geist:ital,wght@0,100..900;1,100..900&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="./styles.css" />
-</head>
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Geist:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="./styles.css"
+    />
+  </head>
 
-<body class="bg-gray-900 text-white text-opacity-70">
-    </div>
-    <nav>
-        <div class="container p-4 flex gap-sm text-sm justify-end">
-            <a href="/">Home</a>
-            <a href="#">Docs</a>
-            <a href="#">Examples</a>
-            <a href="#">Playground</a>
+  <body
+    class="bg-gray-900 text-white text-opacity-70"
+  >
+    <header
+      class="fixed inset-x-0 top-0 z-50 border-b border-gray-500/50 bg-gray-900/80 backdrop-blur-md"
+    >
+      <nav
+        class="mx-auto flex h-16 w-full max-w-6xl items-center justify-between px-5 sm:px-8"
+      >
+
+        <a
+          href="#top"
+          class="group flex items-center gap-2.5 font-mono text-sm font-semibold text-white"
+        >
+          <span
+            class="flex h-7 w-7 items-center justify-center rounded border border-white/10 bg-white/5 text-blue-600 transition-colors group-hover:border-blue-600/60"
+          >~</span>
+          <span>reactive<span
+              class="text-blue-600"
+            >-vanilla</span></span>
+        </a>
+        <div
+          class="hidden items-center gap-7 lg:flex"
+        >
+
+          <a
+            href="#manifesto"
+            class="font-mono text-sm text-muted-foreground transition-colors hover:text-white"
+          >Manifesto</a>
+
+          <a
+            href="#primitives"
+            class="font-mono text-sm text-muted-foreground transition-colors hover:text-white"
+          >Primitives</a>
+
+          <a
+            href="#demos"
+            class="font-mono text-sm text-muted-foreground transition-colors hover:text-white"
+          >Demos</a>
+
+          <a
+            href="#examples"
+            class="font-mono text-sm text-muted-foreground transition-colors hover:text-white"
+          >Examples</a>
+
+          <a
+            href="#getting-started"
+            class="font-mono text-sm text-muted-foreground transition-colors hover:text-white"
+          >Getting started</a>
         </div>
-    </nav>
-    <div class="router-outlet">
-        <section class="p-5 container py-8">
-            <div class="flex flex-col gap-lg pt-[2rem] md:pt-[8rem]">
-                <div class="flex flex-col gap-sm text-center">
-                    <div class="flex flex-col gap-xs">
-                        <h1 class="text-4xl md:text-5xl text-white">
-                            The DOM is already
-                            a rendering engine.
-                        </h1>
-                        <p class="text-black-50">
-                            A tiny reactive runtime for building modern interfaces
-                            with vanilla JavaScript — directly on the DOM.
-                        </p>
-                    </div>
-                    <div class="flex gap-sm justify-center">
-                        <a href="#" class="py-xs px-sm rounded-lg bg-blue-700 text-white">
-                            Get started
-                        </a>
-                        <a href="#" class="py-xs px-sm rounded-lg bg-background-100 border-gray-600 border text-white">
-                            Explore examples
-                        </a>
-                    </div>
-                </div>
+        <div
+          class="flex items-center gap-3"
+        >
+          <a
+            href="https://github.com"
+            target="_blank"
+            rel="noreferrer"
+            aria-label="View on GitHub"
+            class="flex h-9 w-9 items-center justify-center rounded-md border border-gray-600 text-muted-foreground transition-colors hover:border-blue-600/60 hover:text-white"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="h-4 w-4"
+              aria-hidden="true"
+            ><path
+                d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"
+              ></path><path
+                d="M9 18c-4.51 2-5-2-7-2"
+              ></path></svg>
+          </a>
 
-                <div data-tabs class="rounded-md flex flex-col md:flex-row max-w-[1000px] gap-md w-full mx-auto">
-                    <div class="flex-1 border border-gray-800 rounded-xl text-sm">
-                        <div class="p-xs flex gap-xxs">
-                            <span class="h-[10px] w-[10px] rounded-full bg-gray-800 inline-block"></span>
-                            <span class="h-[10px] w-[10px] rounded-full bg-gray-800 inline-block"></span>
-                            <span class="h-[10px] w-[10px] rounded-full bg-gray-800 inline-block"></span>
-                        </div>
-                        <div class="border-b border-gray-800">
-                            <button data-tab data-active="true"
-                                class="inline-block p-xs px-xs data-active:border-b border-blue-400 data-active:text-blue-400">counter.js</button>
-                            <button href="#" data-tab
-                                class="inline-block p-xs px-xs data-active:border-b border-blue-400 data-active:text-blue-400">counter.html</button>
-                        </div>
-                        <pre class="p-sm" data-tab-content><code><span class="text-pink-400">component</span>('<span class="text-blue-300">.counter</span>', () => {
-    const <span class="text-blue-400">state</span> = <span class="text-pink-400">signal</span>({
-        count: 1
-    });
-
-    <span class="text-pink-400">el</span>('<span class="text-blue-300">.counter-display</span>', {
-        <span class="text-pink-400">textContent</span>: () => <span class="text-blue-400">state</span>.count
-    });
-
-    <span class="text-pink-400">el</span>('<span class="text-blue-300">.increment</span>', {
-        <span class="text-pink-400">onclick</span>: () => <span class="text-blue-400">state</span>.count++
-    });
-
-    <span class="text-pink-400">el</span>('<span class="text-blue-300">.decrement</span>', {
-        <span class="text-pink-400">onclick</span>: () => <span class="text-blue-400">state</span>.count--
-    });
-});</code></pre>
-                        <pre class="p-sm" data-tab-content hidden><code>&lt;<span class="text-pink-400">div</span> class="<span class="text-blue-300">counter</span>"&gt;
-  &lt;<span class="text-pink-400">button</span> class="<span class="text-blue-300">decrement</span>"&gt;-&lt;/<span class="text-pink-400">button</span>&gt;
-  &lt;<span class="text-pink-400">div</span> class="<span class="text-blue-300">counter-display</span>"&gt;1&lt;/<span class="text-pink-400">div</span>&gt;
-  &lt;<span class="text-pink-400">button</span> class="<span class="text-blue-300">increment</span>"&gt;+&lt;/<span class="text-pink-400">button</span>&gt;
-&lt;/<span class="text-pink-400">div</span>&gt;</code></pre>
-                    </div>
-                    <div class="md:w-[300px]">
-                        <div
-                            class="md:absolute items-center justify-center md:-ml-xl md:mt-xl p-md rounded-xl bg-white text-black flex gap-sm">
-                            <div
-                                class="counter flex gap-xs border border-gray-200 rounded-full items-center p-xxs px-xs">
-                                <button
-                                    class="decrement h-[32px] w-[32px] hover:bg-gray-100 rounded-xl active:scale-[0.9] transition-all">-</button>
-                                <div class="counter-display min-w-[20px] text-center">1</div>
-                                <button
-                                    class="increment h-[32px] w-[32px] hover:bg-gray-100 rounded-xl active:scale-[0.9] transition-all">+</button>
-                            </div>
-                            <button class="py-xs px-sm rounded-lg bg-black text-white">Add to cart</button>
-                        </div>
-                    </div>
-                </div>
+          <a
+            href="#getting-started"
+            class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 bg-blue-600 text-white/90 hover:bg-blue-600/90 h-9 rounded-md px-3"
+          >
+            Get started
+          </a>
+        </div>
+      </nav>
+    </header>
+    <main
+      class="router-outlet flex-1"
+    >
+      <section
+        id="top"
+        class="relative overflow-hidden pt-16"
+      >
+        <div
+          class="relative mx-auto grid w-full max-w-6xl items-center gap-14 px-5 pb-20 pt-16 sm:px-8 sm:pt-24 lg:grid-cols-[1.05fr_1fr] lg:pb-28 lg:pt-28"
+        >
+          <div
+            class="relative z-10 min-w-0"
+          >
+            <div>
+              <span
+                class="inline-flex items-center gap-2 rounded-full border border-gray-600 bg-white/10 px-3.5 py-1.5 font-mono text-[12px] text-muted-foreground"
+              ><span
+                  class="relative flex h-2 w-2"
+                ><span
+                    class="absolute inline-flex h-full w-full animate-ping rounded-full bg-blue-600 opacity-60"
+                  ></span><span
+                    class="relative inline-flex h-2 w-2 rounded-full bg-blue-600"
+                  ></span></span>reactive-vanilla<span
+                  class="text-muted text-white/50"
+                >v0.1.0</span></span>
             </div>
-        </section>
-    </div>
+            <h1
+              class="mt-6 text-balance font-mono text-[2.4rem] font-extrabold leading-[1.06] tracking-tight text-white sm:text-6xl lg:text-[4rem]"
+            >
+              Small primitives.<br/><span
+                class="text-blue-600 text-shadow-glow"
+              >The real DOM.</span>
+            </h1>
+            <p
+              class="mt-6 max-w-xl text-pretty text-base leading-relaxed text-muted-foreground sm:text-lg"
+            >
+              Reactive Vanilla is a lightweight reactive JavaScript runtime that works directly on
+              the DOM — a handful of primitives like signals, effects and components, with no JSX,
+              no virtual DOM, no compiler and no build step.
+            </p>
+            <div
+              class="mt-8 flex flex-wrap items-center gap-3"
+            >
+
+              <a
+                href="#getting-started"
+                class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 bg-blue-600 text-white/90 hover:bg-blue-600/90 h-11 rounded-md px-8 gap-2 font-mono"
+              >Get
+                started
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="h-4 w-4"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M5 12h14"
+                  ></path>
+                  <path
+                    d="m12 5 7 7-7 7"
+                  ></path>
+                </svg></a>
+
+              <a
+                href="https://github.com"
+                target="_blank"
+                rel="noreferrer"
+                class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 border border-gray-600 bg-gray-900 hover:bg-accent hover:text-accent-foreground h-11 rounded-md px-8 gap-2 font-mono"
+              ><svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="h-4 w-4"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"
+                  >
+                  </path>
+                  <path
+                    d="M9 18c-4.51 2-5-2-7-2"
+                  ></path>
+                </svg>View on GitHub</a>
+            </div>
+            <ul
+              class="mt-10 flex flex-wrap items-center gap-x-4 gap-y-2"
+            >
+              <li
+                class="flex items-center gap-1.5 font-mono text-[12.5px] text-muted-foreground/80"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="lucide lucide-x h-3.5 w-3.5 text-muted-foreground/50"
+                  aria-hidden="true"
+                ><path
+                    d="M18 6 6 18"
+                  ></path><path
+                    d="m6 6 12 12"
+                  ></path></svg>No JSX
+              </li>
+              <li
+                class="flex items-center gap-1.5 font-mono text-[12.5px] text-muted-foreground/80"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="lucide lucide-x h-3.5 w-3.5 text-muted-foreground/50"
+                  aria-hidden="true"
+                ><path
+                    d="M18 6 6 18"
+                  ></path><path
+                    d="m6 6 12 12"
+                  ></path></svg>No Virtual DOM
+              </li>
+              <li
+                class="flex items-center gap-1.5 font-mono text-[12.5px] text-muted-foreground/80"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="lucide lucide-x h-3.5 w-3.5 text-muted-foreground/50"
+                  aria-hidden="true"
+                ><path
+                    d="M18 6 6 18"
+                  ></path><path
+                    d="m6 6 12 12"
+                  ></path></svg>No Compiler
+              </li>
+              <li
+                class="flex items-center gap-1.5 font-mono text-[12.5px] text-muted-foreground/80"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="lucide lucide-x h-3.5 w-3.5 text-muted-foreground/50"
+                  aria-hidden="true"
+                ><path
+                    d="M18 6 6 18"
+                  ></path><path
+                    d="m6 6 12 12"
+                  ></path></svg>No Build Step
+              </li>
+            </ul>
+          </div>
+          <div
+            class="relative z-10 min-w-0 w-full"
+          >
+            <div
+              class="terminal terminal-glow shadow-[0_40px_120px_-40px_hsl(200_71%_45%/0.45)]"
+            >
+              <div
+                class="terminal-titlebar"
+              >
+                <span
+                  class="terminal-dot bg-[#ff5f57]"
+                ></span><span
+                  class="terminal-dot bg-[#febc2e]"
+                ></span><span
+                  class="terminal-dot bg-[#28c840]"
+                ></span><span
+                  class="ml-3 truncate font-mono text-xs text-muted-foreground"
+                >index.js</span>
+              </div>
+              <pre
+              class="overflow-x-auto whitespace-pre-wrap break-words font-mono text-[12.5px] leading-[1.6] text-white/90 p-4 sm:p-5"><code class="block"><span class="text-accent">import</span><span> { signal, effect }
+  </span><span class="text-accent">from</span><span> </span><span class="text-blue-600">"reactive-vanilla"</span><span>;
+
+</span><span class="italic text-muted-foreground/60">// a reactive value</span><span>
+</span><span class="text-accent">const</span><span> count = signal(</span><span class="text-accent/80">0</span><span>);
+
+</span><span class="italic text-muted-foreground/60">// re-runs whenever count changes</span><span>
+effect(() =&gt; {
+  document
+    .querySelector(</span><span class="text-blue-600">"#counter"</span><span>)
+    .textContent = count.value;
+});
+
+count.value++; </span><span class="italic text-muted-foreground/60">// updates the DOM itself</span><span class="animate-caret ml-0.5 inline-block h-[1em] w-[0.55em] translate-y-[0.15em] bg-blue-600/90"></span></code></pre>
+            </div>
+            <p
+              class="mt-4 text-center font-mono text-xs text-muted-foreground/70"
+            >
+              <span
+                class="text-blue-600"
+              >&gt;_</span> a whole component, ~15 lines, zero
+              dependencies
+            </p>
+          </div>
+        </div>
+      </section>
+      <section
+        id="manifesto"
+        class="scroll-mt-24 py-24 sm:py-32"
+      >
+        <div
+          class="mx-auto w-full max-w-6xl px-5 sm:px-8"
+        >
+          <div
+            class="mb-12 max-w-2xl sm:mb-16"
+          >
+            <p
+              class="mb-3 font-mono text-xs uppercase tracking-[0.25em] text-blue-600"
+            >
+              // 01 · the problem
+            </p>
+            <h2
+              class="text-balance font-mono text-3xl font-bold leading-tight tracking-tight text-white sm:text-4xl lg:text-[2.75rem]"
+            >
+              We piled abstraction<br/>on abstraction
+            </h2>
+            <p
+              class="mt-4 text-pretty text-base leading-relaxed text-muted-foreground sm:text-lg"
+            >
+              Somewhere between component thinking and virtual DOM diffing, we forgot that the
+              browser already knows how to update the DOM. A simple form ended up needing three
+              files, a build pipeline, and a framework runtime.
+            </p>
+          </div>
+          <div
+            class="grid gap-10 lg:grid-cols-[1.1fr_1fr] lg:gap-16"
+          >
+            <figure
+              class="flex flex-col justify-between rounded-md border border-gray-500/20 bg-card/60 p-8 sm:p-10"
+            >
+              <p
+                class="font-serif text-3xl italic leading-snug text-white sm:text-[2.1rem]"
+              >
+                “The browser is not the enemy. It is the platform.”
+              </p>
+              <figcaption
+                class="mt-8 font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground"
+              >
+                reactive-vanilla — <span
+                  class="text-blue-600"
+                >a manifesto</span>
+              </figcaption>
+            </figure>
+            <div
+              class="grid gap-6 sm:grid-cols-2"
+            >
+              <div
+                class="rounded-md border border-gray-500/20 bg-card/60 p-6"
+              >
+                <p
+                  class="mb-5 font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground"
+                >
+                  What we removed
+                </p>
+                <ul
+                  class="space-y-3.5"
+                >
+                  <li
+                    class="flex items-center gap-3 font-mono text-sm text-muted-foreground"
+                  >
+                    <span
+                      class="flex h-6 w-6 shrink-0 items-center justify-center rounded border border-gray-600 bg-gray-700/60"
+                    ><svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="h-3.5 w-3.5 text-red-400"
+                      ><path
+                          d="M18 6 6 18"
+                        ></path><path
+                          d="m6 6 12 12"
+                        ></path></svg></span>JSX
+                  </li>
+                  <li
+                    class="flex items-center gap-3 font-mono text-sm text-muted-foreground"
+                  >
+                    <span
+                      class="flex h-6 w-6 shrink-0 items-center justify-center rounded border border-gray-600 bg-gray-700/60"
+                    ><svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="h-3.5 w-3.5 text-red-400"
+                      ><path
+                          d="M18 6 6 18"
+                        ></path><path
+                          d="m6 6 12 12"
+                        ></path></svg></span>Virtual DOM
+                  </li>
+                  <li
+                    class="flex items-center gap-3 font-mono text-sm text-muted-foreground"
+                  >
+                    <span
+                      class="flex h-6 w-6 shrink-0 items-center justify-center rounded border border-gray-600 bg-gray-700/60"
+                    ><svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="h-3.5 w-3.5 text-red-400"
+                      ><path
+                          d="M18 6 6 18"
+                        ></path><path
+                          d="m6 6 12 12"
+                        ></path></svg></span>Template compiler
+                  </li>
+                  <li
+                    class="flex items-center gap-3 font-mono text-sm text-muted-foreground"
+                  >
+                    <span
+                      class="flex h-6 w-6 shrink-0 items-center justify-center rounded border border-gray-600 bg-gray-700/60"
+                    ><svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="h-3.5 w-3.5 text-red-400"
+                      ><path
+                          d="M18 6 6 18"
+                        ></path><path
+                          d="m6 6 12 12"
+                        ></path></svg></span>Build step
+                  </li>
+                </ul>
+              </div>
+              <div
+                class="rounded-md border border-blue-600/30 bg-blue-600/[0.07] p-6"
+              >
+                <p
+                  class="mb-5 font-mono text-xs uppercase tracking-[0.2em] text-blue-600"
+                >
+                  What is left
+                </p>
+                <ul
+                  class="space-y-3.5"
+                >
+                  <li
+                    class="flex items-center gap-3 font-mono text-sm text-white"
+                  >
+                    <span
+                      class="flex h-6 w-6 shrink-0 items-center justify-center rounded border border-blue-600/40 bg-blue-600/10"
+                    ><svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="h-3.5 w-3.5 text-blue-500"
+                        aria-hidden="true"
+                      ><path
+                          d="M20 6 9 17l-5-5"
+                        ></path></svg></span>HTML
+                  </li>
+                  <li
+                    class="flex items-center gap-3 font-mono text-sm text-white"
+                  >
+                    <span
+                      class="flex h-6 w-6 shrink-0 items-center justify-center rounded border border-blue-600/40 bg-blue-600/10"
+                    ><svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="h-3.5 w-3.5 text-blue-500"
+                        aria-hidden="true"
+                      ><path
+                          d="M20 6 9 17l-5-5"
+                        ></path></svg></span>JavaScript
+                  </li>
+                  <li
+                    class="flex items-center gap-3 font-mono text-sm text-white"
+                  >
+                    <span
+                      class="flex h-6 w-6 shrink-0 items-center justify-center rounded border border-blue-600/40 bg-blue-600/10"
+                    ><svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="h-3.5 w-3.5 text-blue-500"
+                        aria-hidden="true"
+                      ><path
+                          d="M20 6 9 17l-5-5"
+                        ></path></svg></span>The real DOM
+                  </li>
+                  <li
+                    class="flex items-center gap-3 font-mono text-sm text-white"
+                  >
+                    <span
+                      class="flex h-6 w-6 shrink-0 items-center justify-center rounded border border-blue-600/40 bg-blue-600/10"
+                    ><svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="h-3.5 w-3.5 text-blue-500"
+                        aria-hidden="true"
+                      ><path
+                          d="M20 6 9 17l-5-5"
+                        ></path></svg></span>Your code
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section
+        id="primitives"
+        class="scroll-mt-24 py-24 sm:py-32"
+      >
+        <div
+          class="mx-auto w-full max-w-6xl px-5 sm:px-8"
+        >
+          <div
+            class="mb-12 max-w-2xl sm:mb-16"
+          >
+            <p
+              class="mb-3 font-mono text-xs uppercase tracking-[0.25em] text-blue-600"
+            >
+              // 02 · the model
+            </p>
+            <h2
+              class="text-balance font-mono text-3xl font-bold leading-tight tracking-tight text-white sm:text-4xl lg:text-[2.75rem]"
+            >
+              Six primitives.<br/><span
+                class="text-blue-600"
+              >Everything else is you.</span>
+            </h2>
+            <p
+              class="mt-4 text-pretty text-base leading-relaxed text-muted-foreground sm:text-lg"
+            >
+              The whole programming model fits on one screen. Combine these primitives into
+              components, and combine components into complete interfaces — no new syntax to learn,
+              just JavaScript and the DOM.
+            </p>
+          </div>
+          <div
+            class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3"
+          >
+            <article
+              class="group flex flex-col rounded-md border border-gray-500/20 bg-card/60 p-5 transition-colors hover:border-blue-600/50"
+            >
+              <div
+                class="mb-4 flex items-center justify-between"
+              >
+                <span
+                  class="font-mono text-xs text-blue-600/80"
+                >01</span><span
+                  class="h-1.5 w-1.5 rounded-full bg-blue-600/0 transition-colors group-hover:bg-blue-600"
+                ></span>
+              </div>
+              <h3
+                class="font-mono text-[15px] font-bold text-white"
+              >signals</h3>
+              <p
+                class="mt-1.5 mb-5 text-sm leading-relaxed text-muted-foreground"
+              >
+                Reactive values that notify the moment they change.
+              </p>
+              <div
+                class="mt-auto"
+              >
+                <div
+                  class="terminal terminal-glow"
+                >
+                  <pre
+                  class="overflow-x-auto whitespace-pre-wrap break-words font-mono text-[12.5px] leading-[1.6] text-white/90 p-4"><code class="block"><span class="text-accent">const</span><span> count = signal(</span><span class="text-accent/80">0</span><span>);</span></code></pre>
+                </div>
+              </div>
+            </article>
+            <article
+              class="group flex flex-col rounded-md border border-gray-500/20 bg-card/60 p-5 transition-colors hover:border-blue-600/50"
+            >
+              <div
+                class="mb-4 flex items-center justify-between"
+              >
+                <span
+                  class="font-mono text-xs text-blue-600/80"
+                >02</span><span
+                  class="h-1.5 w-1.5 rounded-full bg-blue-600/0 transition-colors group-hover:bg-blue-600"
+                ></span>
+              </div>
+              <h3
+                class="font-mono text-[15px] font-bold text-white"
+              >effects</h3>
+              <p
+                class="mt-1.5 mb-5 text-sm leading-relaxed text-muted-foreground"
+              >
+                Code that automatically re-runs when its signals change.
+              </p>
+              <div
+                class="mt-auto"
+              >
+                <div
+                  class="terminal terminal-glow"
+                >
+                  <pre
+                  class="overflow-x-auto whitespace-pre-wrap break-words font-mono text-[12.5px] leading-[1.6] text-white/90 p-4"><code class="block"><span>effect(() =&gt; render(count.value));</span></code></pre>
+                </div>
+              </div>
+            </article>
+            <article
+              class="group flex flex-col rounded-md border border-gray-500/20 bg-card/60 p-5 transition-colors hover:border-blue-600/50"
+            >
+              <div
+                class="mb-4 flex items-center justify-between"
+              >
+                <span
+                  class="font-mono text-xs text-blue-600/80"
+                >03</span><span
+                  class="h-1.5 w-1.5 rounded-full bg-blue-600/0 transition-colors group-hover:bg-blue-600"
+                ></span>
+              </div>
+              <h3
+                class="font-mono text-[15px] font-bold text-white"
+              >reactive elements</h3>
+              <p
+                class="mt-1.5 mb-5 text-sm leading-relaxed text-muted-foreground"
+              >
+                DOM nodes that stay in sync with your state on their own.
+              </p>
+              <div
+                class="mt-auto"
+              >
+                <div
+                  class="terminal terminal-glow"
+                >
+                  <pre
+                  class="overflow-x-auto whitespace-pre-wrap break-words font-mono text-[12.5px] leading-[1.6] text-white/90 p-4"><code class="block"><span class="text-accent">const</span><span> view = element(
+  () =&gt; </span><span class="text-blue-600">`&lt;p&gt;${count.value}&lt;/p&gt;`</span><span>
+);</span></code></pre>
+                </div>
+              </div>
+            </article>
+            <article
+              class="group flex flex-col rounded-md border border-gray-500/20 bg-card/60 p-5 transition-colors hover:border-blue-600/50"
+            >
+              <div
+                class="mb-4 flex items-center justify-between"
+              >
+                <span
+                  class="font-mono text-xs text-blue-600/80"
+                >04</span><span
+                  class="h-1.5 w-1.5 rounded-full bg-blue-600/0 transition-colors group-hover:bg-blue-600"
+                ></span>
+              </div>
+              <h3
+                class="font-mono text-[15px] font-bold text-white"
+              >components</h3>
+              <p
+                class="mt-1.5 mb-5 text-sm leading-relaxed text-muted-foreground"
+              >
+                Small functions that own their DOM, state and cleanup.
+              </p>
+              <div
+                class="mt-auto"
+              >
+                <div
+                  class="terminal terminal-glow"
+                >
+                  <pre
+                  class="overflow-x-auto whitespace-pre-wrap break-words font-mono text-[12.5px] leading-[1.6] text-white/90 p-4"><code class="block"><span class="text-accent">function</span><span> Counter() {
+  </span><span class="text-accent">const</span><span> n = signal(</span><span class="text-accent/80">0</span><span>);
+  </span><span class="text-accent">return</span><span> button(n);
+}</span></code></pre>
+                </div>
+              </div>
+            </article>
+            <article
+              class="group flex flex-col rounded-md border border-gray-500/20 bg-card/60 p-5 transition-colors hover:border-blue-600/50"
+            >
+              <div
+                class="mb-4 flex items-center justify-between"
+              >
+                <span
+                  class="font-mono text-xs text-blue-600/80"
+                >05</span><span
+                  class="h-1.5 w-1.5 rounded-full bg-blue-600/0 transition-colors group-hover:bg-blue-600"
+                ></span>
+              </div>
+              <h3
+                class="font-mono text-[15px] font-bold text-white"
+              >contexts</h3>
+              <p
+                class="mt-1.5 mb-5 text-sm leading-relaxed text-muted-foreground"
+              >
+                Share state down a tree without threading props through it.
+              </p>
+              <div
+                class="mt-auto"
+              >
+                <div
+                  class="terminal terminal-glow"
+                >
+                  <pre
+                  class="overflow-x-auto whitespace-pre-wrap break-words font-mono text-[12.5px] leading-[1.6] text-white/90 p-4"><code class="block"><span class="text-accent">const</span><span> theme = context(</span><span class="text-blue-600">"dark"</span><span>);</span></code></pre>
+                </div>
+              </div>
+            </article>
+            <article
+              class="group flex flex-col rounded-md border border-gray-500/20 bg-card/60 p-5 transition-colors hover:border-blue-600/50"
+            >
+              <div
+                class="mb-4 flex items-center justify-between"
+              >
+                <span
+                  class="font-mono text-xs text-blue-600/80"
+                >06</span><span
+                  class="h-1.5 w-1.5 rounded-full bg-blue-600/0 transition-colors group-hover:bg-blue-600"
+                ></span>
+              </div>
+              <h3
+                class="font-mono text-[15px] font-bold text-white"
+              >lifecycle &amp; cleanup</h3>
+              <p
+                class="mt-1.5 mb-5 text-sm leading-relaxed text-muted-foreground"
+              >
+                Dispose effects and listeners exactly when they are done.
+              </p>
+              <div
+                class="mt-auto"
+              >
+                <div
+                  class="terminal terminal-glow"
+                >
+                  <pre
+                  class="overflow-x-auto whitespace-pre-wrap break-words font-mono text-[12.5px] leading-[1.6] text-white/90 p-4"><code class="block"><span>onCleanup(() =&gt; store.unsubscribe());</span></code></pre>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+      <section
+        id="demos"
+        class="scroll-mt-24 py-24 sm:py-32"
+      >
+        <div
+          class="mx-auto w-full max-w-6xl px-5 sm:px-8"
+        >
+          <div
+            class="mb-12 max-w-2xl sm:mb-16"
+          >
+            <p
+              class="mb-3 font-mono text-xs uppercase tracking-[0.25em] text-blue-600"
+            >
+              // 03 · live demos
+            </p>
+            <h2
+              class="text-balance font-mono text-3xl font-bold leading-tight tracking-tight text-white sm:text-4xl lg:text-[2.75rem]"
+            >
+              Read the code.<br/><span
+                class="text-blue-600"
+              >Watch it run.</span>
+            </h2>
+            <p
+              class="mt-4 text-pretty text-base leading-relaxed text-muted-foreground sm:text-lg"
+            >
+              Every snippet on the left is running on the right. This is a reactive interface in
+              plain JavaScript — no build step, no framework runtime, just signals driving the real
+              DOM.
+            </p>
+          </div>
+          <div>
+            <div
+              class="inline-flex h-10 items-center justify-center rounded-md bg-muted p-1 text-muted-foreground font-mono"
+            >
+              <button
+                id="radix-_r_0_-trigger-counter"
+                class="inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-gray-900 data-[state=active]:text-white data-[state=active]:shadow-sm font-mono text-xs"
+              >
+                Counter</button><button
+                id="radix-_r_0_-trigger-form"
+                class="inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-gray-900 data-[state=active]:text-white data-[state=active]:shadow-sm font-mono text-xs"
+              >
+                Form binding</button><button
+                id="radix-_r_0_-trigger-list"
+                class="inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-gray-900 data-[state=active]:text-white data-[state=active]:shadow-sm font-mono text-xs"
+              >
+                List rendering
+              </button>
+            </div>
+            <div
+              aria-labelledby="radix-_r_0_-trigger-counter"
+              id="radix-_r_0_-content-counter"
+              class="ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 mt-6"
+            >
+              <div
+                class="grid items-stretch gap-6 lg:grid-cols-2"
+              >
+                <div
+                  class="h-full min-w-0"
+                >
+                  <div
+                    class="terminal terminal-glow h-full"
+                  >
+                    <div
+                      class="terminal-titlebar"
+                    >
+                      <span
+                        class="terminal-dot bg-[#ff5f57]"
+                      ></span><span
+                        class="terminal-dot bg-[#febc2e]"
+                      ></span><span
+                        class="terminal-dot bg-[#28c840]"
+                      ></span><span
+                        class="ml-3 truncate font-mono text-xs text-muted-foreground"
+                      >counter.js</span>
+                    </div>
+                    <pre
+                    class="overflow-x-auto whitespace-pre-wrap break-words font-mono text-[12.5px] leading-[1.6] text-white/90 p-4 sm:p-5"><code class="block"><span class="text-accent">const</span><span> count = signal(</span><span class="text-accent/80">0</span><span>);
+
+</span><span class="text-accent">const</span><span> btn = element(() =&gt;
+  </span><span class="text-blue-600">`&lt;button&gt;Clicked ${count.value}
+    times&lt;/button&gt;`</span><span>
+);
+
+btn.on(</span><span class="text-blue-600">"click"</span><span>, () =&gt; count.value++);
+document.body.append(btn);</span></code></pre>
+                  </div>
+                </div>
+                <div
+                  class="terminal terminal-glow flex h-full min-w-0 flex-col"
+                >
+                  <div
+                    class="terminal-titlebar"
+                  >
+                    <span
+                      class="terminal-dot bg-[#ff5f57]"
+                    ></span><span
+                      class="terminal-dot bg-[#febc2e]"
+                    ></span><span
+                      class="terminal-dot bg-[#28c840]"
+                    ></span><span
+                      class="ml-3 font-mono text-xs text-muted-foreground"
+                    >counter.html</span><span
+                      class="ml-auto flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-widest text-blue-600"
+                    ><span
+                        class="h-1.5 w-1.5 rounded-full bg-blue-600"
+                      ></span>live</span>
+                  </div>
+                  <div
+                    class="relative flex-1 overflow-hidden bg-card p-6"
+                  >
+                    <div
+                      class="pointer-events-none absolute inset-0 bg-grid opacity-60 [mask-image:radial-gradient(ellipse_90%_70%_at_50%_30%,black,transparent)]"
+                    >
+                    </div>
+                    <div
+                      class="relative h-full"
+                    >
+                      <div
+                        data-counter
+                        class="flex h-full flex-col items-center justify-center gap-6 py-12 text-center"
+                      >
+                        <p
+                          class="font-mono text-[11px] uppercase tracking-[0.25em] text-muted-foreground"
+                        >
+                          count.value
+                        </p>
+                        <p
+                          data-counter-display
+                          class="font-mono text-6xl font-extrabold text-blue-600 text-shadow-glow"
+                        >
+                          0
+                        </p>
+                        <button
+                          data-counter-increment
+                          class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 bg-blue-600 text-white/90 hover:bg-blue-600/90 h-10 px-4 py-2 gap-2 font-mono"
+                        >
+                          <svg
+                            class="lucide lucide-plus h-4 w-4"
+                          >
+                            <path></path>
+                            <path></path>
+                          </svg>Clicked 0 times
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              aria-labelledby="radix-_r_0_-trigger-form"
+              id="radix-_r_0_-content-form"
+              class="ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 mt-6"
+            >
+            </div>
+            <div
+              aria-labelledby="radix-_r_0_-trigger-list"
+              id="radix-_r_0_-content-list"
+              class="ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 mt-6"
+            >
+            </div>
+          </div>
+        </div>
+      </section>
+      <section
+        id="examples"
+        class="scroll-mt-24 py-24 sm:py-32"
+      >
+        <div
+          class="mx-auto w-full max-w-6xl px-5 sm:px-8"
+        >
+          <div
+            class="mb-12 max-w-2xl sm:mb-16"
+          >
+            <p
+              class="mb-3 font-mono text-xs uppercase tracking-[0.25em] text-blue-600"
+            >
+              // 04 · what you can build
+            </p>
+            <h2
+              class="text-balance font-mono text-3xl font-bold leading-tight tracking-tight text-white sm:text-4xl lg:text-[2.75rem]"
+            >
+              Not a toy library.<br/><span
+                class="text-blue-600"
+              >A foundation.</span>
+            </h2>
+            <p
+              class="mt-4 text-pretty text-base leading-relaxed text-muted-foreground sm:text-lg"
+            >
+              The minimalist approach is not limited to tiny demos. These are the kinds of
+              interfaces people build with Reactive Vanilla every day.
+            </p>
+          </div>
+          <div
+            class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3"
+          >
+            <div
+              class="group rounded-md border border-gray-500/20 bg-card/60 p-6 transition-colors hover:border-blue-600/50"
+            >
+              <div
+                class="mb-5 inline-flex h-11 w-11 items-center justify-center rounded border border-gray-600 bg-gray-500/5 text-blue-600 transition-colors group-hover:border-blue-600/50 group-hover:text-accent"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="h-5 w-5"
+                  aria-hidden="true"
+                ><rect
+                    width="20"
+                    height="12"
+                    x="2"
+                    y="6"
+                    rx="2"
+                  ></rect><path
+                    d="M12 12h.01"
+                  ></path><path
+                    d="M17 12h.01"
+                  ></path><path
+                    d="M7 12h.01"
+                  ></path></svg>
+              </div>
+              <h3
+                class="font-mono text-[15px] font-bold text-white"
+              >Forms</h3>
+              <p
+                class="mt-2 text-sm leading-relaxed text-muted-foreground"
+              >
+                Validation, binding and submit handling with a handful of primitives — no form
+                library required.
+              </p>
+            </div>
+            <div
+              class="group rounded-md border border-gray-500/20 bg-card/60 p-6 transition-colors hover:border-blue-600/50"
+            >
+              <div
+                class="mb-5 inline-flex h-11 w-11 items-center justify-center rounded border border-gray-600 bg-gray-500/5 text-blue-600 transition-colors group-hover:border-blue-600/50 group-hover:text-accent"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="h-5 w-5"
+                  aria-hidden="true"
+                ><path
+                    d="M3 7V5a2 2 0 0 1 2-2h2"
+                  ></path><path
+                    d="M17 3h2a2 2 0 0 1 2 2v2"
+                  ></path><path
+                    d="M21 17v2a2 2 0 0 1-2 2h-2"
+                  ></path><path
+                    d="M7 21H5a2 2 0 0 1-2-2v-2"
+                  ></path><path
+                    d="M7 12h10"
+                  ></path></svg>
+              </div>
+              <h3
+                class="font-mono text-[15px] font-bold text-white"
+              >OTP inputs</h3>
+              <p
+                class="mt-2 text-sm leading-relaxed text-muted-foreground"
+              >
+                Splitting a code across inputs and wiring paste, autofocus and backspace behavior by
+                hand.
+              </p>
+            </div>
+            <div
+              class="group rounded-md border border-gray-500/20 bg-card/60 p-6 transition-colors hover:border-blue-600/50"
+            >
+              <div
+                class="mb-5 inline-flex h-11 w-11 items-center justify-center rounded border border-gray-600 bg-gray-500/5 text-blue-600 transition-colors group-hover:border-blue-600/50 group-hover:text-accent"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="h-5 w-5"
+                  aria-hidden="true"
+                ><circle
+                    cx="9"
+                    cy="12"
+                    r="1"
+                  ></circle><circle
+                    cx="9"
+                    cy="5"
+                    r="1"
+                  ></circle><circle
+                    cx="9"
+                    cy="19"
+                    r="1"
+                  ></circle><circle
+                    cx="15"
+                    cy="12"
+                    r="1"
+                  ></circle><circle
+                    cx="15"
+                    cy="5"
+                    r="1"
+                  ></circle><circle
+                    cx="15"
+                    cy="19"
+                    r="1"
+                  ></circle></svg>
+              </div>
+              <h3
+                class="font-mono text-[15px] font-bold text-white"
+              >Drag-and-drop</h3>
+              <p
+                class="mt-2 text-sm leading-relaxed text-muted-foreground"
+              >
+                HTML5 drag events meet signals, and reorderable interfaces stop being scary.
+              </p>
+            </div>
+            <div
+              class="group rounded-md border border-gray-500/20 bg-card/60 p-6 transition-colors hover:border-blue-600/50"
+            >
+              <div
+                class="mb-5 inline-flex h-11 w-11 items-center justify-center rounded border border-gray-600 bg-gray-500/5 text-blue-600 transition-colors group-hover:border-blue-600/50 group-hover:text-accent"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="h-5 w-5"
+                  aria-hidden="true"
+                ><rect
+                    width="7"
+                    height="9"
+                    x="3"
+                    y="3"
+                    rx="1"
+                  ></rect><rect
+                    width="7"
+                    height="5"
+                    x="14"
+                    y="3"
+                    rx="1"
+                  ></rect><rect
+                    width="7"
+                    height="9"
+                    x="14"
+                    y="12"
+                    rx="1"
+                  ></rect><rect
+                    width="7"
+                    height="5"
+                    x="3"
+                    y="16"
+                    rx="1"
+                  ></rect></svg>
+              </div>
+              <h3
+                class="font-mono text-[15px] font-bold text-white"
+              >Dashboards</h3>
+              <p
+                class="mt-2 text-sm leading-relaxed text-muted-foreground"
+              >
+                Live panels and charts that update in place as signals fire underneath them.
+              </p>
+            </div>
+            <div
+              class="group rounded-md border border-gray-500/20 bg-card/60 p-6 transition-colors hover:border-blue-600/50"
+            >
+              <div
+                class="mb-5 inline-flex h-11 w-11 items-center justify-center rounded border border-gray-600 bg-gray-500/5 text-blue-600 transition-colors group-hover:border-blue-600/50 group-hover:text-accent"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="h-5 w-5"
+                  aria-hidden="true"
+                ><circle
+                    cx="6"
+                    cy="19"
+                    r="3"
+                  ></circle><path
+                    d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"
+                  ></path><circle
+                    cx="18"
+                    cy="5"
+                    r="3"
+                  ></circle></svg>
+              </div>
+              <h3
+                class="font-mono text-[15px] font-bold text-white"
+              >Routing</h3>
+              <p
+                class="mt-2 text-sm leading-relaxed text-muted-foreground"
+              >
+                A URL signal, a couple of effects, and your whole app has routes.
+              </p>
+            </div>
+            <div
+              class="group rounded-md border border-gray-500/20 bg-card/60 p-6 transition-colors hover:border-blue-600/50"
+            >
+              <div
+                class="mb-5 inline-flex h-11 w-11 items-center justify-center rounded border border-gray-600 bg-gray-500/5 text-blue-600 transition-colors group-hover:border-blue-600/50 group-hover:text-accent"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="h-5 w-5"
+                  aria-hidden="true"
+                ><path
+                    d="M10 22V7a1 1 0 0 0-1-1H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5a1 1 0 0 0-1-1H2"
+                  ></path><rect
+                    x="14"
+                    y="2"
+                    width="8"
+                    height="8"
+                    rx="1"
+                  ></rect></svg>
+              </div>
+              <h3
+                class="font-mono text-[15px] font-bold text-white"
+              >Custom components</h3>
+              <p
+                class="mt-2 text-sm leading-relaxed text-muted-foreground"
+              >
+                Grow from a single element into a complete component system without leaving plain
+                HTML.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section
+        id="getting-started"
+        class="scroll-mt-24 py-24 sm:py-32"
+      >
+        <div
+          class="mx-auto w-full px-5 sm:px-8 max-w-6xl"
+        >
+          <div
+            class="mb-12 max-w-2xl sm:mb-16"
+          >
+            <p
+              class="mb-3 font-mono text-xs uppercase tracking-[0.25em] text-blue-600"
+            >
+              // 05 · getting started
+            </p>
+            <h2
+              class="text-balance font-mono text-3xl font-bold leading-tight tracking-tight text-white sm:text-4xl lg:text-[2.75rem]"
+            >
+              Three steps.<br/><span
+                class="text-blue-600"
+              >No build tools.</span>
+            </h2>
+            <p
+              class="mt-4 text-pretty text-base leading-relaxed text-muted-foreground sm:text-lg"
+            >
+              Install it, include it, and start writing. Reactive Vanilla works in any environment
+              that speaks HTML, CSS and JavaScript — no configuration, no toolchain.
+            </p>
+          </div>
+          <div
+            class="grid gap-10 lg:grid-cols-3 lg:gap-6"
+          >
+            <div
+              class="min-w-0"
+            >
+              <div
+                class="mb-4 flex items-baseline gap-3"
+              >
+                <span
+                  class="font-mono text-sm font-bold text-blue-600"
+                >01</span>
+                <h3
+                  class="font-mono text-[15px] font-bold text-white"
+                >Install</h3>
+              </div>
+              <div
+                class="terminal terminal-glow"
+              >
+                <div
+                  class="terminal-titlebar"
+                >
+                  <span
+                    class="terminal-dot bg-[#ff5f57]"
+                  ></span><span
+                    class="terminal-dot bg-[#febc2e]"
+                  ></span><span
+                    class="terminal-dot bg-[#28c840]"
+                  ></span><span
+                    class="ml-3 truncate font-mono text-xs text-muted-foreground"
+                  >shell</span>
+                </div>
+                <pre
+                class="overflow-x-auto whitespace-pre-wrap break-words font-mono text-[12.5px] leading-[1.6] text-white/90 p-4 sm:p-5"><code class="block"><div class="flex"><span class="shrink-0 select-none pr-3 text-blue-600">$</span><span class="min-w-0 flex-1"><span>npm install reactive-vanilla</span></span></div></code></pre>
+              </div>
+            </div>
+            <div
+              class="min-w-0"
+            >
+              <div
+                class="mb-4 flex items-baseline gap-3"
+              >
+                <span
+                  class="font-mono text-sm font-bold text-blue-600"
+                >02</span>
+                <h3
+                  class="font-mono text-[15px] font-bold text-white"
+                >Or drop in a script tag</h3>
+              </div>
+              <div
+                class="terminal terminal-glow"
+              >
+                <div
+                  class="terminal-titlebar"
+                >
+                  <span
+                    class="terminal-dot bg-[#ff5f57]"
+                  ></span><span
+                    class="terminal-dot bg-[#febc2e]"
+                  ></span><span
+                    class="terminal-dot bg-[#28c840]"
+                  ></span><span
+                    class="ml-3 truncate font-mono text-xs text-muted-foreground"
+                  >index.html</span>
+                </div>
+                <pre
+                class="overflow-x-auto whitespace-pre-wrap break-words font-mono text-[12.5px] leading-[1.6] text-white/90 p-4 sm:p-5"><code class="block"><span class="text-white/60">&lt;</span><span class="text-accent">script</span><span class="text-white/60"> src="https://unpkg.com/
+  reactive-vanilla"&gt;</span><span class="text-white/60">&lt;/</span><span class="text-accent">script</span><span class="text-white/60">&gt;</span></code></pre>
+              </div>
+            </div>
+            <div
+              class="min-w-0"
+            >
+              <div
+                class="mb-4 flex items-baseline gap-3"
+              >
+                <span
+                  class="font-mono text-sm font-bold text-blue-600"
+                >03</span>
+                <h3
+                  class="font-mono text-[15px] font-bold text-white"
+                >
+                  Create your first component
+                </h3>
+              </div>
+              <div
+                class="terminal terminal-glow"
+              >
+                <div
+                  class="terminal-titlebar"
+                >
+                  <span
+                    class="terminal-dot bg-[#ff5f57]"
+                  ></span><span
+                    class="terminal-dot bg-[#febc2e]"
+                  ></span><span
+                    class="terminal-dot bg-[#28c840]"
+                  ></span><span
+                    class="ml-3 truncate font-mono text-xs text-muted-foreground"
+                  >counter.js</span>
+                </div>
+                <pre
+                class="overflow-x-auto whitespace-pre-wrap break-words font-mono text-[12.5px] leading-[1.6] text-white/90 p-4 sm:p-5"><code class="block"><span class="text-accent">import</span><span> {
+  signal,
+  element,
+} </span><span class="text-accent">from</span><span> </span><span class="text-blue-600">"reactive-vanilla"</span><span>;
+
+</span><span class="text-accent">const</span><span> count = signal(</span><span class="text-accent/80">0</span><span>);
+</span><span class="text-accent">const</span><span> btn = element(() =&gt;
+  </span><span class="text-blue-600">`&lt;button&gt;${count.value}&lt;/button&gt;`</span><span>
+);
+
+btn.on(</span><span class="text-blue-600">"click"</span><span>, () =&gt; count.value++);
+document.body.append(btn);</span></code></pre>
+              </div>
+            </div>
+          </div>
+          <div
+            class="mt-16 overflow-hidden rounded-md border border-gray-500/20 bg-card/60"
+          >
+            <div
+              class="relative p-8 sm:p-12"
+            >
+              <div
+                class="pointer-events-none absolute inset-0 bg-glow-green opacity-70"
+              ></div>
+              <div
+                class="relative"
+              >
+                <p
+                  class="max-w-2xl font-serif text-2xl italic leading-snug text-white sm:text-3xl"
+                >
+                  Maybe you don't need such a large abstraction to build reactive interfaces.
+                </p>
+                <p
+                  class="mt-4 max-w-xl text-sm leading-relaxed text-muted-foreground sm:text-base"
+                >
+                  Explore the documentation, run the examples, or read the source. The whole thing
+                  is small enough to understand in one sitting.
+                </p>
+                <div
+                  class="mt-8 flex flex-wrap gap-3"
+                >
+
+                  <a
+                    href="#primitives"
+                    class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 bg-blue-600 text-white/90 hover:bg-blue-600/90 h-11 rounded-md px-8 gap-2 font-mono"
+                  >Read the docs<svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      class="h-4 w-4"
+                      aria-hidden="true"
+                    ><path
+                        d="M12 7v14"
+                      ></path><path
+                        d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"
+                      ></path></svg></a>
+
+                  <a
+                    href="https://github.com"
+                    target="_blank"
+                    rel="noreferrer"
+                    class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 border border-gray-600 bg-gray-900 hover:bg-accent hover:text-accent-foreground h-11 rounded-md px-8 gap-2 font-mono"
+                  ><svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      class="h-4 w-4"
+                      aria-hidden="true"
+                    ><path
+                        d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"
+                      ></path><path
+                        d="M9 18c-4.51 2-5-2-7-2"
+                      ></path></svg>Explore the source<svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      class="h-4 w-4"
+                      aria-hidden="true"
+                    ><path
+                        d="M5 12h14"
+                      ></path><path
+                        d="m12 5 7 7-7 7"
+                      ></path></svg></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer
+      class="border-t border-gray-600/60 bg-card/40"
+    >
+      <div
+        class="mx-auto w-full max-w-6xl px-5 py-14 sm:px-8"
+      >
+        <div
+          class="grid gap-12 lg:grid-cols-[1.2fr_1fr]"
+        >
+          <div>
+
+            <a
+              href="#top"
+              class="flex items-center gap-2.5 font-mono text-sm font-semibold text-white"
+            ><span
+                class="flex h-7 w-7 items-center justify-center rounded border border-gray-600 bg-gray-800/40 text-blue-600"
+              >~</span><span>reactive<span
+                  class="text-blue-600"
+                >-vanilla</span></span></a>
+            <p
+              class="mt-4 max-w-sm text-sm leading-relaxed text-muted-foreground"
+            >
+              A lightweight reactive JavaScript runtime that works directly on the real DOM. Small
+              primitives, understandable behavior, zero ceremony.
+            </p>
+            <div
+              class="mt-6 flex items-center gap-2"
+            >
+
+              <a
+                href="https://github.com"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="GitHub"
+                class="flex h-9 w-9 items-center justify-center rounded-md border border-gray-600 text-muted-foreground transition-colors hover:border-blue-600/60 hover:text-white"
+              ><svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="h-4 w-4"
+                  aria-hidden="true"
+                ><path
+                    d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"
+                  ></path><path
+                    d="M9 18c-4.51 2-5-2-7-2"
+                  ></path></svg></a>
+
+              <a
+                href="https://www.npmjs.com"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="npm"
+                class="flex h-9 w-9 items-center justify-center rounded-md border border-gray-600 text-muted-foreground transition-colors hover:border-blue-600/60 hover:text-white"
+              ><svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="h-4 w-4"
+                  aria-hidden="true"
+                ><path
+                    d="M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z"
+                  ></path><path
+                    d="M12 22V12"
+                  ></path><polyline
+                    points="3.29 7 12 12 20.71 7"
+                  ></polyline><path
+                    d="m7.5 4.27 9 5.15"
+                  ></path></svg></a>
+
+              <a
+                href="#getting-started"
+                aria-label="Docs"
+                class="flex h-9 w-9 items-center justify-center rounded-md border border-gray-600 text-muted-foreground transition-colors hover:border-blue-600/60 hover:text-white"
+              ><svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="h-4 w-4"
+                  aria-hidden="true"
+                ><path
+                    d="M12 7v14"
+                  ></path><path
+                    d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"
+                  ></path></svg></a>
+            </div>
+          </div>
+          <div
+            class="grid grid-cols-2 gap-8"
+          >
+            <div>
+              <p
+                class="mb-4 font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground"
+              >
+                Project
+              </p>
+              <ul
+                class="space-y-2.5"
+              >
+                <li>
+
+                  <a
+                    href="#getting-started"
+                    class="text-sm text-muted-foreground transition-colors hover:text-white"
+                  >Docs</a>
+                </li>
+                <li>
+
+                  <a
+                    href="#examples"
+                    class="text-sm text-muted-foreground transition-colors hover:text-white"
+                  >Examples</a>
+                </li>
+                <li>
+
+                  <a
+                    href="https://github.com"
+                    target="_blank"
+                    rel="noreferrer"
+                    class="text-sm text-muted-foreground transition-colors hover:text-white"
+                  >Source</a>
+                </li>
+                <li>
+
+                  <a
+                    href="https://www.npmjs.com"
+                    target="_blank"
+                    rel="noreferrer"
+                    class="text-sm text-muted-foreground transition-colors hover:text-white"
+                  >npm</a>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <p
+                class="mb-4 font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground"
+              >
+                Community
+              </p>
+              <ul
+                class="space-y-2.5"
+              >
+                <li>
+
+                  <a
+                    href="https://github.com"
+                    target="_blank"
+                    rel="noreferrer"
+                    class="text-sm text-muted-foreground transition-colors hover:text-white"
+                  >GitHub Discussions</a>
+                </li>
+                <li>
+
+                  <a
+                    href="https://discord.com"
+                    target="_blank"
+                    rel="noreferrer"
+                    class="text-sm text-muted-foreground transition-colors hover:text-white"
+                  >Discord</a>
+                </li>
+                <li>
+
+                  <a
+                    href="https://x.com"
+                    target="_blank"
+                    rel="noreferrer"
+                    class="text-sm text-muted-foreground transition-colors hover:text-white"
+                  >Twitter / X</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div
+          class="mt-14 flex flex-col items-start justify-between gap-3 border-t border-gray-600/60 pt-6 sm:flex-row sm:items-center"
+        >
+          <p
+            class="font-mono text-xs text-muted-foreground/70"
+          >© 2026 Reactive Vanilla</p>
+          <p
+            class="font-mono text-xs text-muted-foreground/70"
+          >
+            MIT licensed · <span
+              class="text-blue-600"
+            >_ built for the platform</span>
+          </p>
+        </div>
+      </div>
+    </footer>
     <script type="module" src="./index.js"></script>
-</body>
+  </body>
 
 </html>

@@ -27,14 +27,13 @@ const createOtp = defineComponent(({ root, size = 6, name, oninput, oncomplete, 
     });
     const input = $input._raw;
     const fields = Array.from({ length: size }, (_, index) => index);
-    const half = Math.ceil(size / 2);
     const createField = (index) => create('span', {
         textContent: () => state.value[index] ?? '',
         class: {
             field: true,
             focused: () => Boolean(state.isFocused && state.selectionStart <= index && state.selectionEnd >= index)
         }
-    })
+    });
 
     function handleBeforeInput(event) {
         const ignoreEvent = !event.data || !filter;
