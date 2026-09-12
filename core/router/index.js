@@ -1,157 +1,159 @@
-function router({ outlet, routes }) {
-    const root = document.querySelector(outlet);
+function router({ outlet, routes, prefix }) {
+  const root = document.querySelector(outlet);
 
-    const routing = {
-        current: null,
-        load: async function (path) {
-            const route = routes[path];
-            const notFoundRoute = !route;
+  const routing = {
+    current: null,
+    load: async function (path) {
+      const route = routes[path];
+      const notFoundRoute = !route;
 
-            if (notFoundRoute) {
-                throw new Error(`Route not found: ${route}`);
-            }
+      if (notFoundRoute) {
+        throw new Error(`Route not found: ${route}`);
+      }
 
-            const url = new URL(route.html, location.origin);
+      const url = new URL(route.html, location.origin);
 
-            const response = await fetch(url);
-            const failedResponse = !response.ok;
+      const response = await fetch(url);
+      const failedResponse = !response.ok;
 
-            if (failedResponse) {
-                throw new Error(`Failed to load route: ${path}`);
-            }
+      if (failedResponse) {
+        throw new Error(`Failed to load route: ${path}`);
+      }
 
-            return {
-                html: await response.text(),
-                script: route.script
-            };
-        },
-        parse(html) {
-            const template = document.createElement("template");
+      return {
+        html: await response.text(),
+        script: route.script,
+      };
+    },
+    parse(html) {
+      const template = document.createElement("template");
 
-            template.innerHTML = html;
+      template.innerHTML = html;
 
-            return template.content;
-        },
-        async loadScript(route) {
-            const emptyScript = !route.script;
-            if (emptyScript) return;
+      return template.content;
+    },
+    async loadScript(route) {
+      const emptyScript = !route.script;
+      if (emptyScript) return;
 
-            const module = await route.script();
+      const module = await route.script();
 
-            const emptyPageMethod = typeof module.page !== 'function';
-            if (emptyPageMethod) {
-                throw new Error('Route module must export page()');
-            }
+      const emptyPageMethod = typeof module.page !== "function";
+      if (emptyPageMethod) {
+        throw new Error("Route module must export page()");
+      }
 
-            return module.page();
-        },
-        async render(path) {
-            const { html, script } = await routing.load(path);
-            const fragment = routing.parse(html);
-            const nextOutlet = fragment.querySelector(outlet);
-            const module = await script();
+      return module.page();
+    },
+    async render(path) {
+      const { html, script } = await routing.load(path);
+      const fragment = routing.parse(html);
+      const nextOutlet = fragment.querySelector(outlet);
+      const module = await script();
 
-            const emptyOutlet = !nextOutlet;
+      const emptyOutlet = !nextOutlet;
 
-            if (emptyOutlet) {
-                throw new Error(`Route ${path} does not contain an outlet`);
-            }
+      if (emptyOutlet) {
+        throw new Error(`Route ${path} does not contain an outlet`);
+      }
 
-            const emptyPageMethod = typeof module.page !== 'function';
-            if (emptyPageMethod) {
-                throw new Error('Route module must export a page() function');
-            }
+      const emptyPageMethod = typeof module.page !== "function";
+      if (emptyPageMethod) {
+        throw new Error("Route module must export a page() function");
+      }
 
-            if (routing.current) {
-                routing.current.destroy?.();
-                routing.current = null;
-            }
+      if (routing.current) {
+        routing.current.destroy?.();
+        routing.current = null;
+      }
 
-            root.replaceChildren(...nextOutlet.childNodes);
-            module.page();
-        },
-        async transition(path) {
-            if (!document.startViewTransition) {
-                return routing.render(path);
-            }
+      root.replaceChildren(...nextOutlet.childNodes);
+      module.page();
+    },
+    async transition(path) {
+      if (!document.startViewTransition) {
+        return routing.render(path);
+      }
 
-            return document.startViewTransition(() => {
-                return routing.render(path);
-            }).finished;
-        },
-        async navigate(path, {
-            replace = false
-        } = {}) {
-            const isActiveRoute = location.pathname === path;
+      return document.startViewTransition(() => {
+        return routing.render(path);
+      }).finished;
+    },
+    async navigate(path, { replace = false } = {}) {
+      const isActiveRoute = location.pathname === path;
 
-            if (isActiveRoute) return;
+      if (isActiveRoute) return;
 
-            if (replace) {
-                history.replaceState({}, "", path);
-            } else {
-                history.pushState({}, "", path);
-            }
+      if (replace) {
+        history.replaceState({}, "", path);
+      } else {
+        history.pushState({}, "", path);
+      }
 
-            await routing.transition(path);
-        },
-        handlePopState() {
-            routing.render(location.pathname);
-        },
-        handleClick(event) {
-            if (event.defaultPrevented) return;
+      await routing.transition(path);
+    },
+    handlePopState() {
+      routing.render(location.pathname);
+    },
+    handleClick(event) {
+      if (event.defaultPrevented) return;
 
-            const hasPressedKey = event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey;
-            if (hasPressedKey) return;
+      const hasPressedKey =
+        event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey;
+      if (hasPressedKey) return;
 
-            const link = event.target.closest("a");
-            const emptyLink = !link;
+      const link = event.target.closest("a");
+      const emptyLink = !link;
 
-            if (emptyLink) return;
+      if (emptyLink) return;
 
-            const ignoreLink = link.target || link.hasAttribute("download") || link.origin !== location.origin;
+      const ignoreLink =
+        link.target ||
+        link.hasAttribute("download") ||
+        link.origin !== location.origin ||
+        link.href.includes("#");
 
-            if (ignoreLink) return;
+      if (ignoreLink) return;
 
-            const url = new URL(link.href, location.href);
-            const emptyRoute = !routes[url.pathname];
+      const url = new URL(link.href, location.href);
+      const emptyRoute = !routes[url.pathname];
 
-            if (emptyRoute) return;
+      if (emptyRoute) return;
 
-            event.preventDefault();
+      event.preventDefault();
 
-            routing.navigate(url.pathname);
-        },
-        async start() {
-            document.addEventListener('click', routing.handleClick);
-            window.addEventListener('popstate', routing.handlePopState);
+      routing.navigate(url.pathname);
+    },
+    async start() {
+      document.addEventListener("click", routing.handleClick);
+      window.addEventListener("popstate", routing.handlePopState);
 
-            const path = routing.normalizePathname(location.pathname);
-            console.log({ path });
-            const route = routes[path];
+      const path = routing.normalizePathname(location.pathname);
+      const route = routes[path];
 
-            const emptyRoute = !route;
-            if (emptyRoute) return;
+      const emptyRoute = !route;
+      if (emptyRoute) return;
 
-            await routing.loadScript(route);
-        },
-        stop() {
-            document.removeEventListener('click', routing.handleClick);
+      await routing.loadScript(route);
+    },
+    stop() {
+      document.removeEventListener("click", routing.handleClick);
 
-            window.removeEventListener('popstate', routing.handlePopState);
+      window.removeEventListener("popstate", routing.handlePopState);
 
-            routing.current?.destroy?.();
-            routing.current = null;
-        },
-        normalizePathname(pathname) {
-            pathname = pathname.replace('index.html', '');
+      routing.current?.destroy?.();
+      routing.current = null;
+    },
+    normalizePathname(pathname) {
+      pathname = pathname.replace("index.html", "").replace(prefix, "");
 
-            if (pathname.endsWith('/') && pathname.length > 1) return pathname.slice(0, -1);
+      if (pathname.endsWith("/") && pathname.length > 1) return pathname.slice(0, -1);
 
-            return pathname;
-        }
-    }
+      return pathname;
+    },
+  };
 
-    return routing;
+  return routing;
 }
 
-export { router }
+export { router };

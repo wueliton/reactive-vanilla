@@ -1,17 +1,29 @@
 import { effect } from "../effect/index.js";
 
 function bindClass(element, classes) {
-    for (const [name, value] of Object.entries(classes)) {
-        const isFn = typeof value === 'function';
+  effect(() => {
+    element.className = resolveClass(classes).join(" ");
+  });
+}
 
-        if (isFn) {
-            effect(() => {
-                element.classList.toggle(name, Boolean(value()))
-            });
-        } else {
-            element.classList.toggle(name, Boolean(value));
-        }
-    }
+function resolveClass(value) {
+  const emptyClass = value === null || value === false;
+
+  if (emptyClass) return [];
+
+  if (typeof value === "function") {
+    return resolveClass(value());
+  }
+
+  if (typeof value === "string") {
+    return value.split(/\s+/).filter(Boolean);
+  }
+
+  if (Array.isArray(value)) {
+    return value.flatMap(resolveClass);
+  }
+
+  return [];
 }
 
 export { bindClass };

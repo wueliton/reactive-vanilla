@@ -1,46 +1,51 @@
+import { getCurrentContext } from "../context/index.js";
+
 function effect(fn) {
-    const context = window.currentContext;
+  const context = getCurrentContext();
 
-    const reactiveEffect = {
-        cleanup: null,
-        stopped: false,
-        run() {
-            if (this.stopped) return;
+  const reactiveEffect = {
+    cleanup: null,
+    stopped: false,
+    run() {
+      if (this.stopped) return;
 
-            if (this.cleanup) {
-                this.cleanup();
-                this.cleanup = null;
-            }
+      if (this.cleanup) {
+        this.cleanup();
+        this.cleanup = null;
+      }
 
-            const previousEffect = context.activeEffect;
+      const previousContext = window.currentContext;
+      const previousEffect = context.activeEffect;
 
-            context.activeEffect = this;
+      window.currentContext = context;
+      context.activeEffect = this;
 
-            try {
-                this.cleanup = fn();
-            } finally {
-                context.activeEffect = previousEffect;
-            }
-        },
-        stop() {
-            if (this.stopped) return;
+      try {
+        this.cleanup = fn();
+      } finally {
+        context.activeEffect = previousEffect;
+        window.currentContext = previousContext;
+      }
+    },
+    stop() {
+      if (this.stopped) return;
 
-            this.stopped = true;
+      this.stopped = true;
 
-            if (this.cleanup) {
-                this.cleanup();
-                this.cleanup = null;
-            }
+      if (this.cleanup) {
+        this.cleanup();
+        this.cleanup = null;
+      }
 
-            context.effects.delete(this);
-        }
-    };
+      context.effects.delete(this);
+    },
+  };
 
-    context.effects.add(reactiveEffect);
+  context.effects.add(reactiveEffect);
 
-    reactiveEffect.run();
+  reactiveEffect.run();
 
-    return reactiveEffect;
+  return reactiveEffect;
 }
 
 export { effect };

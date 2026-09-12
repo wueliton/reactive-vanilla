@@ -1,44 +1,41 @@
+import { createContext, getCurrentContext } from "../context/index.js";
+
 function component(selector, setup) {
-    const root = typeof selector === 'string' ? document.querySelector(selector) : selector;
-    const context = {
-        root,
-        activeEffect: null,
-        effects: new Set(),
-        cleanups: new Set(),
-        children: new Set()
-    };
+  const root = typeof selector === "string" ? document.querySelector(selector) : selector;
 
-    let element;
-    const previousContext = window.currentContext;
-    window.currentContext = context;
+  const context = createContext(root);
 
-    try {
-        element = setup({ root });
-    } finally {
-        window.currentContext = previousContext;
-    }
+  let element;
+  const previousContext = getCurrentContext();
+  window.currentContext = context;
 
-    return {
-        ...element,
-        destroy() {
-            for (const effect of [...context.effects]) {
-                effect.stop();
-            }
+  try {
+    element = setup({ root });
+  } finally {
+    window.currentContext = previousContext;
+  }
 
-            for (const child of [...context.children]) {
-                child.remove();
-            }
+  return {
+    ...element,
+    destroy() {
+      for (const effect of [...context.effects]) {
+        effect.stop();
+      }
 
-            for (const cleanup of [...context.cleanups]) {
-                cleanup();
-            }
+      for (const child of [...context.children]) {
+        child.remove();
+      }
 
-            context.children.clear();
-            context.effects.clear();
-            context.cleanups.clear();
-            context.activeEffect = null;
-        }
-    };
+      for (const cleanup of [...context.cleanups]) {
+        cleanup();
+      }
+
+      context.children.clear();
+      context.effects.clear();
+      context.cleanups.clear();
+      context.activeEffect = null;
+    },
+  };
 }
 
 export { component };
