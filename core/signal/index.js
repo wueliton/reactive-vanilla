@@ -1,48 +1,57 @@
-function signal(target) {
-    const context = window.currentContext;
-    const subscribers = new Map();
+import { getCurrentContext } from "../context/index.js";
 
-    return new Proxy(target, {
-        get(target, property, receiver) {
-            const effect = context?.activeEffect;
+function signal(initialValue) {
+  const isObject = (value) => value !== null && typeof value === "object" && !Array.isArray(value);
 
-            if (effect) {
-                let effects = subscribers.get(property);
+  const createSignal = (initialValue) => {
+    let value = initialValue;
+    const context = getCurrentContext();
+    const subscribers = new Set();
 
-                if (!effects) {
-                    effects = new Set();
-                    subscribers.set(property, effects);
-                }
+    const read = () => {
+      if (context.activeEffect) subscribers.add(context.activeEffect);
+      return value;
+    };
 
-                effects.add(effect);
-            }
+    read.set = (nextValue) => {
+      if (Object.is(value, nextValue)) return;
 
-            return Reflect.get(target, property, receiver);
-        },
+      value = nextValue;
 
-        set(target, property, value, receiver) {
-            const oldValue = target[property];
+      subscribers.forEach((effect) => effect.run());
+    };
 
-            if (Object.is(oldValue, value)) {
-                return true;
-            }
+    read.update = (updater) => {
+      read.set(updater(value));
+    };
 
-            const result = Reflect.set(
-                target,
-                property,
-                value,
-                receiver
-            );
+    return read;
+  };
 
-            const effects = subscribers.get(property);
+  const createReactiveSignal = (object) => {
+    const signals = new Map();
 
-            if (effects) {
-                effects.forEach(effect => effect.run());
-            }
-
-            return result;
+    return new Proxy(object, {
+      get(target, property) {
+        if (!signals.has(property)) {
+          signals.set(property, signal(target[property]));
         }
+
+        return signals.get(property);
+      },
+      set(target, property, value) {
+        if (!signals.has(property)) {
+          signals.set(property, signal(target[property]));
+        }
+
+        signals.get(property).set(value);
+
+        return true;
+      },
     });
+  };
+
+  return isObject(initialValue) ? createReactiveSignal(initialValue) : createSignal(initialValue);
 }
 
 export { signal };

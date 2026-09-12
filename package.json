@@ -1,0 +1,26 @@
+{
+  "name": "otp-input",
+  "version": "1.0.0",
+  "description": "An ongoing technical study of reactive interfaces built with vanilla JavaScript, directly on the DOM, without templates, a virtual DOM, or a build step.",
+  "main": "index.js",
+  "scripts": {
+    "build": "npm run build:esm && npm run build:script",
+    "build:esm": "esbuild core/index.js --bundle --minify --format=esm --outfile=dist/reactive.js",
+    "build:script": "esbuild core/index.js --bundle --minify --format=iife --outfile=dist/reactive.min.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wueliton/otp-input.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/wueliton/otp-input/issues"
+  },
+  "homepage": "https://github.com/wueliton/otp-input#readme",
+  "devDependencies": {
+    "esbuild": "^0.28.2"
+  }
+}

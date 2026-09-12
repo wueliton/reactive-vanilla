@@ -8,7 +8,11 @@ function createContext(root) {
   };
 }
 
-function initializeDocumentContext() {
+function getCurrentContext() {
+  return window.currentContext || initializeDocumentContext();
+}
+
+(function initializeDocumentContext() {
   if (!window.documentContext) {
     window.documentContext = createContext(document);
   }
@@ -18,10 +22,6 @@ function initializeDocumentContext() {
   }
 
   return window.documentContext;
-}
+})();
 
-function getCurrentContext() {
-  return window.currentContext || initializeDocumentContext();
-}
-
-export { createContext, getCurrentContext, initializeDocumentContext };
+export { createContext, getCurrentContext };

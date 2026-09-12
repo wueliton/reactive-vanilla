@@ -1,8 +1,4 @@
-import { router } from "./core/router/index.js";
-import { initializeDocumentContext } from "./core/context/index.js";
-import { initializeTwid } from "./twid.js";
-
-initializeDocumentContext();
+import { router } from "./router/index.js";
 
 const routes = router({
   outlet: ".router-outlet",

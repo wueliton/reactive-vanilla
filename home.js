@@ -1,8 +1,4 @@
-import { component } from "./core/component/index.js";
-import { defineComponent } from "./core/define-component/index.js";
-import { el } from "./core/el/index.js";
-import { create } from "./core/create/index.js";
-import { signal } from "./core/signal/signal.js";
+import { defineComponent, signal, el, create, component } from "./dist/reactive.js";
 import { hightlight } from "./utils/highlight.js";
 
 export function page() {
