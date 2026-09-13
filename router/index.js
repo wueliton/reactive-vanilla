@@ -3,6 +3,15 @@ function router({ outlet, routes, prefix }) {
 
   const routing = {
     current: null,
+    createURL(path) {
+      const url = new URL(path, location.origin);
+      const normalizedPath = routing.normalizePathname(url.pathname);
+      const baseURL = prefix.replace(/\/$/, "");
+
+      url.pathname = `${baseURL}${normalizedPath || "/"}`.replace(/\/+/g, "/");
+
+      return url;
+    },
     load: async function (path) {
       const route = routes[path];
       const notFoundRoute = !route;
@@ -80,6 +89,8 @@ function router({ outlet, routes, prefix }) {
       }).finished;
     },
     async navigate(url, { replace = false } = {}) {
+      url = routing.createURL(url);
+
       const isActiveRoute = location.pathname === url.pathname && !url.hash;
 
       if (isActiveRoute) return;
@@ -99,7 +110,7 @@ function router({ outlet, routes, prefix }) {
         });
       }
 
-      return await routing.transition(url.pathname).then((res) => {
+      return await routing.transition(routing.normalizePathname(url.pathname)).then((res) => {
         routing.handleScrollToHash(url.hash);
         return res;
       });
@@ -133,9 +144,9 @@ function router({ outlet, routes, prefix }) {
 
       if (ignoreLink) return;
 
-      const url = new URL(link.href, location.href);
-      url.pathname = routing.normalizePathname(url.pathname);
-      const emptyRoute = !routes[url.pathname];
+      const url = routing.createURL(link.href);
+      const routePath = routing.normalizePathname(url.pathname);
+      const emptyRoute = !routes[routePath];
 
       if (emptyRoute) return;
 
@@ -165,6 +176,8 @@ function router({ outlet, routes, prefix }) {
     },
     normalizePathname(pathname) {
       pathname = pathname.replace("index.html", "").replace(prefix, "");
+
+      if (!pathname) return "/";
 
       if (pathname.endsWith("/") && pathname.length > 1) return pathname.slice(0, -1);
 
