@@ -3,10 +3,13 @@ function router({ outlet, routes, prefix }) {
 
   const routing = {
     current: null,
+    getBaseURL() {
+      return prefix.replace(/\/$/, "");
+    },
     createURL(path) {
       const url = new URL(path, location.origin);
       const normalizedPath = routing.normalizePathname(url.pathname);
-      const baseURL = prefix.replace(/\/$/, "");
+      const baseURL = routing.getBaseURL();
 
       url.pathname = `${baseURL}${normalizedPath || "/"}`.replace(/\/+/g, "/");
 
@@ -20,7 +23,8 @@ function router({ outlet, routes, prefix }) {
         throw new Error(`Route not found: ${route}`);
       }
 
-      const url = new URL(route.html, location.origin);
+      const url = new URL(`${routing.getBaseURL()}/`, location.origin);
+      url.pathname = `${url.pathname}${route.html.replace(/^\.\//, "")}`;
 
       const response = await fetch(url);
       const failedResponse = !response.ok;
@@ -175,7 +179,7 @@ function router({ outlet, routes, prefix }) {
       routing.current = null;
     },
     normalizePathname(pathname) {
-      pathname = pathname.replace("index.html", "").replace(prefix, "");
+      pathname = pathname.replace("index.html", "").replace(routing.getBaseURL(), "");
 
       if (!pathname) return "/";
 

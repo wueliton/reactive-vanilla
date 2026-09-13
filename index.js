@@ -3,7 +3,7 @@ import { initializeTwid } from "./twid.js";
 
 const routes = router({
   outlet: ".router-outlet",
-  prefix: "/reactive-vanilla",
+  prefix: location.hostname.endsWith("github.io") ? "/reactive-vanilla" : "",
   routes: {
     "/": {
       html: "./index.html",
