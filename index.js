@@ -1,5 +1,6 @@
 import { router } from "./router/index.js";
 import { initializeTwid } from "./twid.js";
+import { hightlight } from "./utils/highlight.js";
 
 const isLocal = ["localhost", "127.0.0.1"].includes(location.hostname);
 
@@ -29,3 +30,5 @@ routes.start();
     initializeTwid();
   }
 })();
+
+document.querySelectorAll("code").forEach((el) => hightlight(el));

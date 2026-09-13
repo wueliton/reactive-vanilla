@@ -1,4 +1,11 @@
-import { createOtp } from "../../components/otp/otp.js";
-import { component } from "../../core/component/index.js";
+import { createOtp } from "../../components/index.js";
+import { component } from "../../dist/reactive.js";
 
-export function page() {}
+export function page() {
+  component(
+    "[otp-input]",
+    createOtp({
+      filter: (value) => value.replace(/\D/g, ""),
+    }),
+  );
+}

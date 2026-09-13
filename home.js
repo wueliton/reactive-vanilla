@@ -1,5 +1,4 @@
 import { defineComponent, signal, el, create, component } from "./dist/reactive.js";
-import { hightlight } from "./utils/highlight.js";
 
 export function page() {
   const Counter = defineComponent(() => {
@@ -105,6 +104,4 @@ export function page() {
   component("[data-tabs]", Tabs());
   component("[data-form]", Form());
   component("[data-todo-list]", TodoList());
-
-  document.querySelectorAll("code").forEach((el) => hightlight(el));
 }
