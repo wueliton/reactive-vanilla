@@ -1,4 +1,5 @@
 import { router } from "./router/index.js";
+import { initializeTwid } from "./twid.js";
 
 const routes = router({
   outlet: ".router-outlet",
@@ -20,3 +21,4 @@ const routes = router({
 });
 
 routes.start();
+initializeTwid();

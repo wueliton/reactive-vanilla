@@ -7,6 +7,8 @@ This repository is a work in progress for exploring how a small reactive runtime
 ## Features
 
 - Reactive state with `signal()`
+- Readable and writable signals with `signal()` and `.set()`
+- Reactive object properties
 - Reactive effects with `effect()`
 - Reactive DOM property bindings
 - Reactive classes and styles
@@ -26,26 +28,54 @@ import { signal } from "./core/signal/index.js";
 import { el } from "./core/el/index.js";
 
 const state = signal({
-    count: 0
+  count: 0,
 });
 
 el(".counter", {
-    textContent: () => state.count
+  textContent: () => state.count(),
 });
 
 el(".increment", {
-    onclick: () => state.count++
+  onclick: () => state.count.set(state.count() + 1),
 });
 ```
 
-HTML stays HTML:
+Signals are functions when read. Primitive signals expose `.set()` and `.update()`;
+object signals expose one signal per property:
+
+```js
+const count = signal(0);
+count();
+count.set(1);
+count.update((value) => value + 1);
+
+const state = signal({ count: 0 });
+state.count();
+state.count.set(1);
+```
+
+Bindings whose value is a function are updated reactively. Event bindings remain
+regular DOM event handlers:
+
+```js
+el(".status", {
+  textContent: () => (state.count() > 0 ? "Active" : "Idle"),
+  class: {
+    active: () => state.count() > 0,
+  },
+  style: {
+    color: () => (state.count() > 0 ? "green" : "gray"),
+  },
+  onclick: (event) => console.log(event.type),
+});
+```
+
+HTML stays HTML, while JavaScript binds behavior to existing elements:
 
 ```html
 <div class="counter">0</div>
 
-<button class="increment">
-    Increment
-</button>
+<button class="increment">Increment</button>
 ```
 
 ## Philosophy

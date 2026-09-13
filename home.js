@@ -63,7 +63,7 @@ export function page() {
     el("[data-items]", {
       children: () =>
         todos().map(
-          (item, index) =>
+          (item) =>
             create("div", {
               class: "flex gap-sm bg-gray-800 p-xs px-sm rounded-md w-full border border-gray-700",
               children: [

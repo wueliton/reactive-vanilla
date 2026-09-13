@@ -79,23 +79,44 @@ function router({ outlet, routes, prefix }) {
         return routing.render(path);
       }).finished;
     },
-    async navigate(path, { replace = false } = {}) {
-      const isActiveRoute = location.pathname === path;
+    async navigate(url, { replace = false } = {}) {
+      const isActiveRoute = location.pathname === url.pathname && !url.hash;
 
       if (isActiveRoute) return;
 
+      const isSameRoute = location.pathname === url.pathname;
+
       if (replace) {
-        history.replaceState({}, "", path);
+        history.replaceState({}, "", url);
       } else {
-        history.pushState({}, "", path);
+        history.pushState({}, "", url);
       }
 
-      await routing.transition(path);
+      if (isSameRoute) {
+        return new Promise((resolve) => {
+          routing.handleScrollToHash(url.hash);
+          resolve();
+        });
+      }
+
+      return await routing.transition(url.pathname).then((res) => {
+        routing.handleScrollToHash(url.hash);
+        return res;
+      });
+    },
+    handleScrollToHash(hash) {
+      const emptyHash = !hash;
+      if (emptyHash) return;
+
+      document.querySelector(hash).scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
     },
     handlePopState() {
-      routing.render(location.pathname);
+      routing.transition(routing.normalizePathname(location.pathname));
     },
-    handleClick(event) {
+    async handleClick(event) {
       if (event.defaultPrevented) return;
 
       const hasPressedKey =
@@ -108,21 +129,19 @@ function router({ outlet, routes, prefix }) {
       if (emptyLink) return;
 
       const ignoreLink =
-        link.target ||
-        link.hasAttribute("download") ||
-        link.origin !== location.origin ||
-        link.href.includes("#");
+        link.target || link.hasAttribute("download") || link.origin !== location.origin;
 
       if (ignoreLink) return;
 
       const url = new URL(link.href, location.href);
+      url.pathname = routing.normalizePathname(url.pathname);
       const emptyRoute = !routes[url.pathname];
 
       if (emptyRoute) return;
 
       event.preventDefault();
 
-      routing.navigate(url.pathname);
+      routing.navigate(url);
     },
     async start() {
       document.addEventListener("click", routing.handleClick);
