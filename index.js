@@ -1,6 +1,8 @@
 import { router } from "./router/index.js";
 import { initializeTwid } from "./twid.js";
 
+const isLocal = location.hostname.includes("localhost");
+
 const routes = router({
   outlet: ".router-outlet",
   prefix: location.hostname.endsWith("github.io") ? "/reactive-vanilla" : "",
@@ -21,4 +23,9 @@ const routes = router({
 });
 
 routes.start();
-initializeTwid();
+
+(() => {
+  if (isLocal) {
+    initializeTwid();
+  }
+})();
