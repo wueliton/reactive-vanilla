@@ -121,15 +121,19 @@ function router({ outlet, routes, prefix }) {
     },
     handleScrollToHash(hash) {
       const emptyHash = !hash;
-      if (emptyHash) return;
+      if (emptyHash) {
+        window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+        return;
+      }
 
       document.querySelector(hash).scrollIntoView({
         behavior: "smooth",
         block: "start",
       });
     },
-    handlePopState() {
-      routing.transition(routing.normalizePathname(location.pathname));
+    async handlePopState() {
+      await routing.transition(routing.normalizePathname(location.pathname));
+      routing.handleScrollToHash(location.hash);
     },
     async handleClick(event) {
       if (event.defaultPrevented) return;
