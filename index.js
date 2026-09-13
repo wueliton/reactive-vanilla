@@ -1,7 +1,7 @@
 import { router } from "./router/index.js";
 import { initializeTwid } from "./twid.js";
 
-const isLocal = location.hostname.includes("localhost");
+const isLocal = ["localhost", "127.0.0.1"].includes(location.hostname);
 
 const routes = router({
   outlet: ".router-outlet",
