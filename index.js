@@ -1,5 +1,4 @@
 import { router } from "./router/index.js";
-import { initializeTwid } from "./twid.js";
 
 const isLocal = ["localhost", "127.0.0.1"].includes(location.hostname);
 
@@ -24,8 +23,11 @@ const routes = router({
 
 routes.start();
 
-(() => {
+const initializeLocalTwid = async () => {
   if (isLocal) {
+    const { initializeTwid } = await import("./twid.js");
     initializeTwid();
   }
-})();
+};
+
+initializeLocalTwid();

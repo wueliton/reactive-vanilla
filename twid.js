@@ -1,7 +1,7 @@
 import { install, stringify } from "https://esm.sh/@twind/core@1";
 import presetTailwind from "https://esm.sh/@twind/preset-tailwind@1";
 import presetAutoprefix from "https://esm.sh/@twind/preset-autoprefix@1";
-import { create } from "./core/create/index.js";
+import { create } from "./dist/reactive.js";
 
 function initializeTwid() {
   const tw = install({
