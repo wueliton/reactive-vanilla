@@ -7,9 +7,19 @@ import { bindStyle } from "./bind-style.js";
 
 function el(selector, bindings) {
   const effects = new Map();
+  const events = new Set();
   const context = getCurrentContext();
   const isElement = typeof selector !== "string";
   const el = isElement ? selector : context.root.querySelector(selector);
+
+  const cleanupEvents = () => {
+    for (const property of events) {
+      el[property] = null;
+    }
+
+    events.clear();
+    context.cleanups.delete(cleanupEvents);
+  };
 
   const element = new Proxy(el, {
     get(target, property, receiver) {
@@ -40,6 +50,11 @@ function el(selector, bindings) {
 
       const isEvent = property.startsWith("on");
       const isReactive = typeof value === "function" && !isEvent;
+
+      if (isEvent) {
+        events.add(property);
+        context.cleanups.add(cleanupEvents);
+      }
 
       if (property === "children") {
         appendChildren(el, value);
