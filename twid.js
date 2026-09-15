@@ -11,6 +11,15 @@ function initializeTwid() {
       fontFamily: {
         serif: ["Geist", "sans-serif"],
         sans: ["Geist", "sans-serif"],
+        mono: [
+          "ui-monospace",
+          "SFMono-Regular",
+          "Menlo",
+          "Monaco",
+          "Consolas",
+          "Liberation Mono",
+          "monospace",
+        ],
       },
       container: {
         center: true,

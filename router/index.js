@@ -45,7 +45,7 @@ function router({ outlet, routes, prefix }) {
 
       return template.content;
     },
-    async loadScript(route) {
+    async loadScript(route, root) {
       const emptyScript = !route.script;
       if (emptyScript) return;
 
@@ -56,23 +56,17 @@ function router({ outlet, routes, prefix }) {
         throw new Error("Route module must export page()");
       }
 
-      return module.page();
+      return module.page(root);
     },
     async render(path) {
-      const { html, script } = await routing.load(path);
-      const fragment = routing.parse(html);
+      const route = await routing.load(path);
+      const fragment = routing.parse(route.html);
       const nextOutlet = fragment.querySelector(outlet);
-      const module = await script();
 
       const emptyOutlet = !nextOutlet;
 
       if (emptyOutlet) {
         throw new Error(`Route ${path} does not contain an outlet`);
-      }
-
-      const emptyPageMethod = typeof module.page !== "function";
-      if (emptyPageMethod) {
-        throw new Error("Route module must export a page() function");
       }
 
       if (routing.current) {
@@ -81,7 +75,7 @@ function router({ outlet, routes, prefix }) {
       }
 
       root.replaceChildren(...nextOutlet.childNodes);
-      module.page();
+      routing.loadScript(route, nextOutlet);
     },
     async transition(path) {
       if (!document.startViewTransition) {
@@ -172,7 +166,7 @@ function router({ outlet, routes, prefix }) {
       const emptyRoute = !route;
       if (emptyRoute) return;
 
-      await routing.loadScript(route);
+      await routing.loadScript(route, document.body);
     },
     stop() {
       document.removeEventListener("click", routing.handleClick);

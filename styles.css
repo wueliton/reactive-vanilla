@@ -72,6 +72,29 @@ span[data-active][data-empty]::before {
   }
 }
 
+html {
+  scrollbar-width: thin;
+  scrollbar-color: #374151 #111827;
+  color-scheme: dark;
+}
+
+html::-webkit-scrollbar {
+  width: 10px;
+}
+
+html::-webkit-scrollbar-track {
+  background: #111827;
+}
+
+html::-webkit-scrollbar-thumb {
+  background: #374151;
+  border-radius: 9999px;
+}
+
+html::-webkit-scrollbar-thumb:hover {
+  background: #4b5563;
+}
+
 @keyframes ping { 
   0% { transform: scale(1); opacity: 1; }
   75%, 100% { transform: scale(2); opacity: 0; }

@@ -1,4 +1,4 @@
-const hightlight = (element) => {
+const hightlight = (content) => {
   const keywords = [
     "const",
     "let",
@@ -19,15 +19,18 @@ const hightlight = (element) => {
     "await",
   ];
 
-  const text = element.innerHTML;
   const keywordRegex = new RegExp(`\\b(?:${keywords.join("|")})\\b`, "g");
 
-  const lines = text.split("\n");
+  const lines = escapeHtml(content).split("\n");
 
   const formattedContent = lines
     .map((line) => {
       const formatted = line
-        .replace(/(['"])(.*?)\1/g, (match) => `<span class="text-blue-300">${match}</span>`)
+        .replace(/(&lt;\/?)([a-zA-Z][\w-]*)/g, '$1<span class="text-blue-400">$2</span>')
+        .replace(
+          /(&quot;.*?&quot;|&#39;.*?&#39;)/g,
+          (match) => `<span class="text-blue-300">${match}</span>`,
+        )
         .replace(keywordRegex, (match) => `<span class="text-red-300">${match}</span>`)
         .replace(/\/\/ .*$/gm, (match) => `<span class="text-gray-400">${match}</span>`)
         .replace(/[\w$]+(?=\s*\()/, (match) => `<span class="text-purple-300">${match}</span>`)
@@ -37,7 +40,16 @@ const hightlight = (element) => {
     })
     .join("\n");
 
-  element.innerHTML = formattedContent;
+  return formattedContent;
+};
+
+const escapeHtml = (value) => {
+  return value
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#39;");
 };
 
 export { hightlight };
