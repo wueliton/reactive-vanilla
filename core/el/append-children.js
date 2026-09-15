@@ -12,43 +12,45 @@ function appendChildren(parent, children) {
 
   effect(() => {
     const value = children();
-    const next = new Set();
+    const nextList = [];
 
-    collectChildren(parent, value, current, next);
+    collectChildrenList(value, nextList);
+
+    const nextSet = new Set(nextList);
+
+    for (let i = 0; i < nextList.length; i++) {
+      const child = nextList[i];
+      const currentChildAtPosition = parent.children[i];
+
+      if (currentChildAtPosition !== child) {
+        parent.insertBefore(child, currentChildAtPosition || null);
+      }
+    }
 
     for (const child of current) {
-      const canRemove = !next.has(child);
-
-      if (canRemove) {
+      if (!nextSet.has(child)) {
         child.remove();
       }
     }
 
-    current = next;
+    current = nextSet;
   });
 }
 
-function collectChildren(parent, children, current, next) {
+function collectChildrenList(children, nextList) {
   const invalidChildren = children === null || children === false;
 
   if (invalidChildren) return;
 
   if (Array.isArray(children)) {
     for (const child of children) {
-      collectChildren(parent, child, current, next);
+      collectChildrenList(child, nextList);
     }
-
     return;
   }
 
   const child = children?._raw ?? children;
-
-  next.add(child);
-
-  const canAddChild = !current.has(child);
-  if (canAddChild) {
-    parent.append(child);
-  }
+  nextList.push(child);
 }
 
 function append(parent, children) {
@@ -60,7 +62,6 @@ function append(parent, children) {
     for (const child of children) {
       append(parent, child);
     }
-
     return;
   }
 
