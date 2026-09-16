@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <title>Countdown</title>
+    <script src="https://cdn.jsdelivr.net/npm/@twind/cdn@1.0.8/cdn.global.js"></script>
+  </head>
+  <body class="bg-zinc-800 min-h-screen flex items-center justify-center text-white">
+    <div
+      counter
+      class="p-6 rounded-[4rem] border border-zinc-600 bg-zinc-900"
+    >
+      <div
+        counter-spin
+        class="h-[300px] group transition-all duration-700 data-active:before:(animate-[spin_10s_linear_infinite]) before:(content-[''] filter-gray rounded-full absolute h-full w-full bg-[conic-gradient(from_0deg,#ec4899,#8b5cf6,#3b82f6,#ec4899)]) relative w-[300px] rounded-full"
+      >
+        <div
+          class="p-[10px] h-full w-full duration-700 group-data-active:bg-transparent transition-all flex bg-zinc-700 z-10 relative rounded-full"
+        >
+          <div
+            class="flex flex-col gap-2 z-10 relative h-full w-full rounded-full items-center justify-center bg-zinc-900"
+          >
+            <span class="text-5xl">🍎</span>
+            <span
+              class="text-5xl"
+              counter-time
+              >00:00</span
+            >
+            <span class="text-xs font-thin text-zinc-400">FOCUS</span>
+            <button
+              counter-btn
+              class="text-5xl"
+            >
+              ▶
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <style>
+      @keyframes spin {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+    <script type="module">
+      import {
+        signal,
+        el,
+        component,
+        defineComponent,
+      } from "https://wueliton.github.io/reactive-vanilla/dist/reactive.js";
+
+      const countDown = defineComponent(({ root, seconds = 5, initialSeconds = seconds }) => {
+        const count = signal(initialSeconds);
+        const isRunning = signal(false);
+        let intervalId = null;
+
+        const stop = () => {
+          clearInterval(intervalId);
+          intervalId = null;
+          isRunning.set(false);
+        };
+
+        const setRunning = (value) => {
+          if (value === isRunning()) {
+            return;
+          }
+
+          if (value) {
+            intervalId = setInterval(() => {
+              const canStop = count() <= 1;
+              count.update((time) => time - 1);
+
+              if (canStop) {
+                stop();
+              }
+            }, 1000);
+            isRunning.set(true);
+            return;
+          }
+
+          stop();
+        };
+
+        el("[counter-spin]", {
+          attr: {
+            ["data-active"]: () => isRunning(),
+          },
+        });
+
+        el("[counter-time]", {
+          textContent: () => {
+            const time = count();
+            const minutes = String(Math.floor(time / 60)).padStart(2, "0");
+            const seconds = String(Math.floor(time % 60)).padStart(2, "0");
+
+            return `${minutes}:${seconds}`;
+          },
+        });
+
+        el("[counter-btn]", {
+          onclick: () => {
+            const countDownEnded = count() === 0;
+            if (countDownEnded) {
+              count.set(seconds);
+              return;
+            }
+
+            setRunning(!isRunning());
+          },
+          textContent: () => (isRunning() ? "⏸︎" : count() === 0 ? "↻" : "▶"),
+        });
+      });
+
+      component("[counter]", countDown());
+    </script>
+  </body>
+</html>
