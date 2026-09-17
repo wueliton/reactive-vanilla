@@ -34,7 +34,7 @@ const hightlight = (content) => {
         .replace(keywordRegex, (match) => `<span class="text-red-300">${match}</span>`)
         .replace(/\/\/ .*$/gm, (match) => `<span class="text-gray-400">${match}</span>`)
         .replace(/[\w$]+(?=\s*\()/g, (match) => `<span class="text-purple-300">${match}</span>`)
-        .replace(/\b[\w$]+(?=\s*:)/g, (match) => `<span class="text-purple-300">${match}</span>`);
+        .replace(/\b[\w$]+(?=\s*: )/g, (match) => `<span class="text-purple-300">${match}</span>`);
 
       return formatted;
     })
