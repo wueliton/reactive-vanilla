@@ -5,10 +5,11 @@ function signal(initialValue) {
 
   const createSignal = (initialValue) => {
     let value = initialValue;
-    const context = getCurrentContext();
     const subscribers = new Set();
 
     const read = () => {
+      const context = getCurrentContext();
+
       if (context.activeEffect) subscribers.add(context.activeEffect);
       return value;
     };
@@ -34,17 +35,19 @@ function signal(initialValue) {
     return new Proxy(object, {
       get(target, property) {
         if (!signals.has(property)) {
-          signals.set(property, signal(target[property]));
+          signals.set(property, createSignal(target[property]));
         }
 
         return signals.get(property);
       },
       set(target, property, value) {
-        if (!signals.has(property)) {
-          signals.set(property, signal(target[property]));
-        }
+        target[property] = value;
 
-        signals.get(property).set(value);
+        if (!signals.has(property)) {
+          signals.set(property, createSignal(value));
+        } else {
+          signals.get(property).set(value);
+        }
 
         return true;
       },
