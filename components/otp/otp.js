@@ -23,7 +23,7 @@ const createOtp = defineComponent(({ root, size = 6, name, oninput, oncomplete, 
     onblur: () => state.isFocused.set(false),
     onkeydown: handleKeyDown,
   });
-  const input = $input._raw;
+  const input = $input;
   const fields = Array.from({ length: size }, (_, index) => index);
   const createField = (index) =>
     create("span", {

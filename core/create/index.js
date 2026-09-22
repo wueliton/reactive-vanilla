@@ -5,13 +5,13 @@ function create(element, bindings) {
   const isTextNode = element === "string";
   const node = isTextNode ? document.createTextNode() : document.createElement(element);
 
-  const proxyEl = el(node, bindings);
+  const createdElement = el(node, bindings);
 
   if (context) {
-    context.children.add(proxyEl);
+    context.children.add(createdElement);
   }
 
-  return proxyEl;
+  return createdElement;
 }
 
 export { create };

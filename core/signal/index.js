@@ -9,8 +9,12 @@ function signal(initialValue) {
 
     const read = () => {
       const context = getCurrentContext();
+      const activeEffect = context.activeEffect;
 
-      if (context.activeEffect) subscribers.add(context.activeEffect);
+      if (activeEffect) {
+        subscribers.add(activeEffect);
+        activeEffect.dependencies.add(subscribers);
+      }
       return value;
     };
 
@@ -19,7 +23,7 @@ function signal(initialValue) {
 
       value = nextValue;
 
-      subscribers.forEach((effect) => effect.run());
+      subscribers.forEach((effect) => effect.schedule());
     };
 
     read.update = (updater) => {

@@ -1,8 +1,14 @@
 import { effect } from "../effect/index.js";
 
 function bindClass(element, classes) {
-  effect(() => {
-    element.className = resolveClass(classes).join(" ");
+  let previous = null;
+
+  return effect(() => {
+    const value = resolveClass(classes).join(" ");
+    const sameValue = previous === value;
+    if (sameValue) return;
+    element.className = value;
+    previous = value;
   });
 }
 

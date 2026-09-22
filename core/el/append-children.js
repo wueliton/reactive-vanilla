@@ -1,4 +1,5 @@
 import { effect } from "../effect/index.js";
+import { destroyElement } from "./element-state.js";
 
 function appendChildren(parent, children) {
   const isStaticChildren = typeof children !== "function";
@@ -10,7 +11,7 @@ function appendChildren(parent, children) {
 
   let current = new Set();
 
-  effect(() => {
+  return effect(() => {
     const value = children();
     const nextList = [];
 
@@ -29,6 +30,7 @@ function appendChildren(parent, children) {
 
     for (const child of current) {
       if (!nextSet.has(child)) {
+        destroyElement(child);
         child.remove();
       }
     }

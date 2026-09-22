@@ -74,7 +74,7 @@ const createCodeEditor = defineComponent(async ({ root }) => {
   });
 
   effect(() => {
-    code.set($textarea._raw.value);
+    code.set($textarea.value);
   });
 });
 

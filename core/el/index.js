@@ -4,97 +4,93 @@ import { appendChildren } from "./append-children.js";
 import { bindAttribute } from "./bind-attribute.js";
 import { bindClass } from "./bind-class.js";
 import { bindStyle } from "./bind-style.js";
+import { getElementState } from "./element-state.js";
 
 function el(selector, bindings) {
-  const effects = new Map();
-  const events = new Set();
-  const context = getCurrentContext();
   const isElement = typeof selector !== "string";
-  const el = isElement ? selector : context.root.querySelector(selector);
+  const context = getCurrentContext();
+  const element = isElement ? selector : context.root.querySelector(selector);
 
-  const cleanupEvents = () => {
-    for (const property of events) {
-      el[property] = null;
-    }
+  setProperties(element, bindings);
 
-    events.clear();
-    context.cleanups.delete(cleanupEvents);
-  };
+  return element;
+}
 
-  const element = new Proxy(el, {
-    get(target, property, receiver) {
-      const isRawProp = property === "_raw";
+function setProperty(element, property, value) {
+  const { effects, events, context } = getElementState(element);
 
-      if (isRawProp) {
-        return target;
-      }
+  for (const [effectProperty, reactiveEffect] of effects) {
+    const replacesProperty =
+      effectProperty === property || effectProperty.startsWith(`${property}:`);
 
-      const value = Reflect.get(target, property, receiver);
+    if (!replacesProperty) continue;
 
-      if (typeof value === "function") {
-        return value.bind(target);
-      }
+    reactiveEffect.stop();
+    effects.delete(effectProperty);
+  }
 
-      return value;
-    },
-    set(target, property, value) {
-      const isRawProp = property === "_raw";
-      if (isRawProp) return false;
+  const isEvent = property.startsWith("on");
+  const isReactive = typeof value === "function" && !isEvent;
 
-      const previousEffect = effects.get(property);
+  if (isEvent) {
+    events.add(property);
+    context.cleanups.add(getElementState(element).cleanupEvents);
+  }
 
-      if (previousEffect) {
-        previousEffect.stop();
-        effects.delete(property);
-      }
+  if (property === "children") {
+    registerEffect(element, property, () => appendChildren(element, value));
+    return element;
+  }
 
-      const isEvent = property.startsWith("on");
-      const isReactive = typeof value === "function" && !isEvent;
+  if (property === "class") {
+    registerEffect(element, property, () => bindClass(element, value));
+    return element;
+  }
 
-      if (isEvent) {
-        events.add(property);
-        context.cleanups.add(cleanupEvents);
-      }
+  if (property === "attr") {
+    bindAttribute(element, value, (name, createEffect) => {
+      registerEffect(element, `attr:${name}`, createEffect);
+    });
+    return element;
+  }
 
-      if (property === "children") {
-        appendChildren(el, value);
-        return true;
-      }
+  if (property === "style") {
+    bindStyle(element, value, (name, createEffect) => {
+      registerEffect(element, `style:${name}`, createEffect);
+    });
+    return element;
+  }
 
-      if (property === "class") {
-        bindClass(el, value);
-        return true;
-      }
+  if (isReactive) {
+    const reactiveEffect = effect(() => {
+      element[property] = value();
+    });
 
-      if (property === "attr") {
-        bindAttribute(el, value);
-        return true;
-      }
+    effects.set(property, reactiveEffect);
+    return element;
+  }
 
-      if (property === "style") {
-        bindStyle(el, value);
-        return true;
-      }
+  element[property] = value;
+  return element;
+}
 
-      if (isReactive) {
-        const reactiveEffect = effect(() => {
-          target[property] = value();
-        });
+function registerEffect(element, property, createEffect) {
+  const state = getElementState(element);
+  const previousEffect = state.effects.get(property);
 
-        effects.set(property, reactiveEffect);
+  previousEffect?.stop();
 
-        return true;
-      }
+  const reactiveEffect = createEffect();
+  state.effects.set(property, reactiveEffect);
+  return reactiveEffect;
+}
 
-      return Reflect.set(target, property, value, target);
-    },
-  });
-
+function setProperties(element, bindings) {
   for (const [property, value] of Object.entries(bindings)) {
-    element[property] = value;
+    setProperty(element, property, value);
   }
 
   return element;
 }
 
-export { el };
+export { el, setProperties, setProperty };

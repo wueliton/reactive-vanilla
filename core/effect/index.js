@@ -1,13 +1,48 @@
 import { getCurrentContext } from "../context/index.js";
 
+const effectState = {
+  flushScheduled: false,
+  pendingEffects: new Set(),
+};
+
+function schedule(effect) {
+  effectState.pendingEffects.add(effect);
+
+  if (effectState.flushScheduled) return;
+
+  effectState.flushScheduled = true;
+
+  requestAnimationFrame(() => {
+    effectState.flushScheduled = false;
+
+    const effects = [...effectState.pendingEffects];
+    effectState.pendingEffects.clear();
+
+    for (const effect of effects) {
+      if (!effect.stopped) effect.run();
+    }
+  });
+}
+
+function cleanupDependencies(effect) {
+  for (const subscribers of effect.dependencies) {
+    subscribers.delete(effect);
+  }
+
+  effect.dependencies.clear();
+}
+
 function effect(fn) {
   const context = getCurrentContext();
 
   const reactiveEffect = {
     cleanup: null,
     stopped: false,
+    dependencies: new Set(),
     run() {
       if (this.stopped) return;
+
+      cleanupDependencies(this);
 
       if (this.cleanup) {
         this.cleanup();
@@ -27,10 +62,16 @@ function effect(fn) {
         window.currentContext = previousContext;
       }
     },
+    schedule() {
+      schedule(this);
+    },
     stop() {
       if (this.stopped) return;
 
       this.stopped = true;
+      cleanupDependencies(this);
+
+      effectState.pendingEffects.delete(this);
 
       if (this.cleanup) {
         this.cleanup();

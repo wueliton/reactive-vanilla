@@ -47,7 +47,7 @@ function initializeTwid() {
     },
   });
 
-  document.body.append($button._raw);
+  document.body.append($button);
 }
 
 export { initializeTwid };
