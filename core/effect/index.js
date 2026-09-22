@@ -56,7 +56,8 @@ function effect(fn) {
       context.activeEffect = this;
 
       try {
-        this.cleanup = fn();
+        const cleanup = fn();
+        this.cleanup = typeof cleanup === "function" ? cleanup : null;
       } finally {
         context.activeEffect = previousEffect;
         window.currentContext = previousContext;
