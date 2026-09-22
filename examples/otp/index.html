@@ -200,7 +200,7 @@
 </style>
 
 <script type="module">
-  import { signal, el, create, effect, component, defineComponent } from "https://wueliton.github.io/reactive-vanilla/dist/reactive.js";
+  import { signal, el, create, effect, component, defineComponent } from "../../core/index.js";
 
   const createOtp = defineComponent(({ root, size = 6, oninput, oncomplete, filter }) => {
     const state = signal({
@@ -221,7 +221,7 @@
     onblur: () => state.isFocused.set(false),
     onkeydown: handleKeyDown,
   });
-  const input = $input._raw;
+  const input = $input;
   const fields = Array.from({ length: size }, (_, index) => index);
   const createField = (index) =>
     create("span", {

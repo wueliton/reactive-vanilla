@@ -51,8 +51,7 @@ function collectChildrenList(children, nextList) {
     return;
   }
 
-  const child = children?._raw ?? children;
-  nextList.push(child);
+  nextList.push(children);
 }
 
 function append(parent, children) {
@@ -67,7 +66,7 @@ function append(parent, children) {
     return;
   }
 
-  parent.append(children?._raw ?? children);
+  parent.append(children);
 }
 
 export { appendChildren };
