@@ -38,7 +38,7 @@ function destroyElement(element) {
     if (!state) continue;
 
     for (const reactiveEffect of state.effects.values()) {
-      reactiveEffect.stop();
+      reactiveEffect?.stop();
     }
 
     state.effects.clear();
