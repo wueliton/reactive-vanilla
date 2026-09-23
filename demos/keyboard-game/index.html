@@ -27,12 +27,23 @@
             <h1 class="text-xl font-bold tracking-tight sm:text-2xl">Type Sprint</h1>
           </div>
         </div>
-        <button
-          id="restart-button"
-          class="rounded-full border border-[#202622]/20 px-4 py-2 font-mono text-xs uppercase tracking-wider transition hover:border-[#202622] hover:bg-white"
-        >
-          Recomeçar
-        </button>
+        <div class="flex items-center gap-3">
+          <a
+            href="https://github.com/wueliton/reactive-vanilla/blob/main/demos/keyboard-game/keyboard-game.js"
+            target="_blank"
+            rel="noreferrer"
+            class="font-mono text-xs uppercase tracking-wider text-[#68716b] transition hover:text-[#202622] focus:outline-none focus:ring-2 focus:ring-[#f05d3b] focus:ring-offset-2"
+            aria-label="Abrir o código do jogo no GitHub"
+          >
+            Ver código ↗
+          </a>
+          <button
+            id="restart-button"
+            class="rounded-full border border-[#202622]/20 px-4 py-2 font-mono text-xs uppercase tracking-wider transition hover:border-[#202622] hover:bg-white"
+          >
+            Recomeçar
+          </button>
+        </div>
       </header>
 
       <section class="grid flex-1 gap-5 py-7 lg:grid-cols-[1fr_300px] lg:gap-8">
